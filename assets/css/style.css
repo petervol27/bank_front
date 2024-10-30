@@ -1,0 +1,57 @@
+.text-purple {
+  color: #7950f2;
+}
+
+.bg-purple {
+  background-color: #7950f2;
+}
+
+.secondary-purple {
+  color: #c9b9fa;
+}
+
+.login-txt:link,
+.login-txt:visited,
+.login-txt:active {
+  color: whitesmoke;
+  transition: all 0.3s;
+}
+.login-txt:hover,
+.join-btn:hover {
+  color: #94d82d;
+  font-weight: 600;
+  background-color: #461f93;
+  transform: scale(1.1);
+}
+
+.hero {
+  background-image: url('../images/hero-img.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin: 0px 30px;
+  padding: 300px;
+}
+
+.join-btn {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.hero-heading {
+  font-size: 60px;
+}
+.hero-link:link,
+.hero-link:active,
+.hero-link:visited {
+  color: #868e96;
+}
+.hero-link:hover {
+  color: black;
+}
+
+.about-list li::before {
+  content: '✓';
+  color: #003366;
+  padding-right: 8px;
+}
