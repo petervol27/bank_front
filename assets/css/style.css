@@ -17,11 +17,12 @@
   transition: all 0.3s;
 }
 .login-txt:hover,
-.join-btn:hover {
-  color: #94d82d;
-  font-weight: 600;
-  background-color: #461f93;
-  transform: scale(1.1);
+.join-btn:hover,
+.join-btn:active {
+  color: #94d82d !important;
+  font-weight: 600 !important;
+  background-color: #461f93 !important;
+  transform: scale(1.1) !important;
 }
 
 .hero {
