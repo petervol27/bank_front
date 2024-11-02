@@ -50,8 +50,89 @@
       </nav>
     </header>
     <main>
-      <h1 class="ms-3 text-purple" id="accountHeading"></h1>
-      <div class="container" id="accountInfo"></div>
+      <div
+        class="ms-3 mt-3 text-purple d-flex justify-content-between align-items-center"
+        id="accountHeading"
+      ></div>
+      <div class="my-3 bg-light text-center p-3" id="accountInfo"></div>
+      <div class="accordion container" id="tableAccordion">
+        <form
+          class="container d-flex justify-content-center align-items-center gap-2 mb-3"
+          id="searchForm"
+        >
+          <input
+            type="search"
+            class="form-control w-25"
+            placeholder="Search for Transaction"
+          />
+
+          <button class="btn form-btn bg-purple" type="submit">Search</button>
+        </form>
+
+        <table class="table table-hover">
+          <thead class="table-active">
+            <tr>
+              <th>Date</th>
+              <th>Action</th>
+              <th>Expanse</th>
+              <th>Income</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseRow1"
+              aria-expanded="false"
+              aria-controls="collapseRow1"
+            >
+              <td class="fw-bold">Monday 1.1.1</td>
+              <td>Salary</td>
+              <td></td>
+              <td class="text-success">100</td>
+              <td class="fw-bold">100</td>
+            </tr>
+            <tr
+              id="collapseRow1"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingOne"
+              data-bs-parent="#tableAccordion"
+            >
+              <td colspan="5">
+                <div class="p-3">
+                  <strong>Details:</strong> This is additional information about
+                  the salary for Monday 1.1.1.
+                </div>
+              </td>
+            </tr>
+            <tr
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseRow2"
+              aria-expanded="false"
+              aria-controls="collapseRow2"
+            >
+              <td class="fw-bold">Tuesday 2.1.1</td>
+              <td>Transfer</td>
+              <td class="text-danger">50</td>
+              <td class="text-success"></td>
+              <td class="fw-bold">50</td>
+            </tr>
+            <tr
+              id="collapseRow2"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#tableAccordion"
+            >
+              <td colspan="5">
+                <div class="p-3">
+                  <strong>Details:</strong> This is additional information about
+                  the transfer for Tuesday 2.1.1.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </main>
     <footer class="bg-light p-3 text-center">
       <h1 class="text-purple">Neo Banking</h1>
@@ -77,9 +158,19 @@
       headers: { Authorization: `Bearer ${access}` },
     });
     const account = response.data.account;
-    const userName = response.data.username;
-    console.log(account);
-    accountHeading.innerHTML = `Welcome, <strong>${userName}!</strong>`;
+    const userName = response.data.user.fname + ' ' + response.data.user.lname;
+    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3">Make a Transaction</a>`;
+    accountInfo.innerHTML = `<h3> Account:<strong class="text-purple"> ${
+      account.account_num
+    }</strong></h3>
+        <p><strong>Branch</strong>: <strong class="text-purple">${
+          account.branch
+        }</strong></p>
+        <p id="accountBalance" class="fs-4"><strong>Current Balance</strong>:<strong ${
+          account.balance >= 0 ? 'class="text-success"' : "class='text-danger'"
+        }> ${account.balance}</strong></p>`;
   };
-  fetchAccount();
+  addEventListener('DOMContentLoaded', (event) => {
+    fetchAccount();
+  });
 </script>
