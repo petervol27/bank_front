@@ -159,7 +159,7 @@
     });
     const account = response.data.account;
     const userName = response.data.user.fname + ' ' + response.data.user.lname;
-    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3">Make a Transaction</a>`;
+    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3" href="./transactions.html">Make a Transaction</a>`;
     accountInfo.innerHTML = `<h3> Account:<strong class="text-purple"> ${
       account.account_num
     }</strong></h3>
