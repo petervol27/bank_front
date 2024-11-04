@@ -94,6 +94,7 @@
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onclick="window.location.href='account.html'"
               >
                 Close
               </button>
@@ -121,6 +122,14 @@
 <script>
   const accountInfo = document.getElementById('accountInfo');
   const fetchAccount = async () => {
+    const access = localStorage.getItem('access_token');
+    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+      headers: { Authorization: `Bearer ${access}` },
+    });
+    const data = response.data;
+    return data;
+  };
+  const fetchAccountDetails = async () => {
     const access = localStorage.getItem('access_token');
     const response = await axios.get('http://127.0.0.1:8000/accounts/', {
       headers: { Authorization: `Bearer ${access}` },
@@ -172,35 +181,35 @@
     accounts.forEach((account) => {
       const user = userMap[account.user];
       if (user) {
-        accountsHTML += `<option value="${account.account_num}">${user.first_name} ${user.last_name} - ${account.account_num}</option>`;
+        accountsHTML += `<option value="${account.id}">${user.first_name} ${user.last_name} - ${account.account_num}</option>`;
       }
     });
     return accountsHTML;
   };
   const fetchData = async () => {
-    fetchAccount();
-    fetchTransactionOptions();
+    await fetchAccountDetails();
+    await fetchTransactionOptions();
     const accountOptionsHTML = await fetchAccounts();
     const transferForm = forms.transfer.replace(
-      '<select class="form-select mb-2" id="accountList"></select>',
-      `<select class="form-select mb-2" id="accountList">${accountOptionsHTML}</select>`
+      '<select class="form-select mb-2" id="recieverAccount"></select>',
+      `<select class="form-select mb-2" id="recieverAccount">${accountOptionsHTML}</select>`
     );
     forms.transfer = transferForm;
   };
+
   addEventListener('DOMcontentloaded', fetchData());
   const forms = {
     // <input type="text" placeholder="Recipient Account Number" name="recieverAccount" id="recieverAccount" class="form-control mb-2">
     transfer: `
       <h5 class="text-purple">Transfer To Account</h5>
-      <input type="text" placeholder="Recipient Account Number" name="recieverAccount" id="recieverAccount" class="form-control mb-2">
-      <select class="form-select mb-2" id="accountList"></select>
-      <input type="number" placeholder="Amount" name="transferAmount" id="transferAmount" class="form-control mb-2">
+      <select class="form-select mb-2" id="recieverAccount"></select>
+      <input type="number" step=".01" placeholder="Amount" name="transferAmount" id="transferAmount" class="form-control mb-2">
       <button type="submit" class="btn form-btn bg-purple">Submit Transfer</button>
     `,
     salary: `
       <h5 class="text-purple">Salary Form</h5>
       <input type="text" placeholder="Employer Name" name="employerName" id="employerName" class="form-control mb-2">
-      <input type="number" placeholder="Salary Amount" name="salaryAmount" id="salaryAmount" class="form-control mb-2">
+      <input type="number" step=".01" placeholder="Salary Amount" name="salaryAmount" id="salaryAmount" class="form-control mb-2">
       <button type="submit" class="btn form-btn bg-purple">Submit Salary</button>
     `,
     payment: `
@@ -209,16 +218,17 @@
         <option value="loan">Loan</option>
         <option value="credit">Credit</option>
       </select>
-      <input type="number" placeholder="Amount" name="paymentAmount" id="paymentAmount" class="form-control mb-2">
+      <input type="number" step=".01" placeholder="Amount" name="paymentAmount" id="paymentAmount" class="form-control mb-2">
       <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
     `,
     other: `
       <h5 class="text-purple">Other Transactions</h5>
       <input type="text" placeholder="Description" name="description" id="description" class="form-control mb-2">
-      <input type="number" placeholder="Amount" name="otherAmount" id="otherAmount" class="form-control mb-2">
+      <input type="number" step=".01" placeholder="Amount" name="otherAmount" id="otherAmount" class="form-control mb-2">
       <button type="submit" class="btn form-btn bg-purple">Submit Other</button>
     `,
   };
+
   document
     .getElementById('transactionType')
     .addEventListener('change', function () {
@@ -235,22 +245,73 @@
       formContent.innerHTML = forms[selectedValue];
     });
 
+  const makeTransaction = async (
+    type,
+    reciever,
+    amount,
+    details,
+    sender = null
+  ) => {
+    const newTransaction = {
+      transaction_type: type,
+      reciever_account: reciever,
+      amount: amount,
+      details: details,
+      sender_account: sender,
+    };
+    const access = localStorage.getItem('access_token');
+    const response = await axios.post(
+      'http://127.0.0.1:8000/transactions/',
+      newTransaction,
+      {
+        headers: { Authorization: `Bearer ${access}` },
+      }
+    );
+  };
+
   document
     .getElementById('transactionForm')
-    .addEventListener('submit', function (event) {
+    .addEventListener('submit', async function (event) {
       event.preventDefault();
+      100;
       const transactionType = document.getElementById('transactionType').value;
       let details = '';
+      const data = await fetchAccount();
+      const account = data.account;
+      const user = data.user;
       if (transactionType === 'transfer') {
-        const recipientAccount =
-          document.getElementById('recieverAccount').value;
+        const recipientAccountElement =
+          document.getElementById('recieverAccount');
+        const selectedOption =
+          recipientAccountElement.options[
+            recipientAccountElement.selectedIndex
+          ];
+        const recieverAccount = selectedOption.text;
+        const recieverId = selectedOption.value;
         const amount = document.getElementById('transferAmount').value;
+        const transactionDetails = `${user.fname + ' ' + user.lname} - ${
+          account.account_num
+        } Transfered ${amount} to ${recieverAccount}`;
+        await makeTransaction(
+          transactionType,
+          recieverId,
+          amount,
+          transactionDetails,
+          account.id
+        );
         details = `<p><strong>Transaction Type:</strong> Transfer</p>
-               <p><strong>Recipient Account:</strong> ${recipientAccount}</p>
+               <p><strong>Recipient Account:</strong> ${recieverAccount}</p>
                <p><strong>Amount:</strong> ${amount}</p>`;
       } else if (transactionType === 'salary') {
         const employerName = document.getElementById('employerName').value;
         const amount = document.getElementById('salaryAmount').value;
+        const transactionDetails = `salary from ${employerName} with a sum of ${amount}`;
+        await makeTransaction(
+          transactionType,
+          account.id,
+          amount,
+          transactionDetails
+        );
         details = `<p><strong>Transaction Type:</strong> Salary</p>
                <p><strong>Employer Name:</strong> ${employerName}</p>
                <p><strong>Amount:</strong> ${amount}</p>`;

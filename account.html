@@ -79,7 +79,7 @@
               <th>Balance</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tableBody">
             <tr
               data-bs-toggle="collapse"
               data-bs-target="#collapseRow1"
@@ -152,6 +152,14 @@
 <script>
   const accountHeading = document.getElementById('accountHeading');
   const accountInfo = document.getElementById('accountInfo');
+  const fetchAccountDetails = async () => {
+    const access = localStorage.getItem('access_token');
+    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+      headers: { Authorization: `Bearer ${access}` },
+    });
+    const data = response.data;
+    return data;
+  };
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
     const response = await axios.get('http://127.0.0.1:8000/accounts/', {
@@ -170,7 +178,53 @@
           account.balance >= 0 ? 'class="text-success"' : "class='text-danger'"
         }> ${account.balance}</strong></p>`;
   };
-  addEventListener('DOMContentLoaded', (event) => {
-    fetchAccount();
+  const fetchHistory = async () => {
+    const access = localStorage.getItem('access_token');
+    const response = await axios.get(
+      'http://127.0.0.1:8000/transactions/history/',
+      {
+        headers: { Authorization: `Bearer ${access}` },
+      }
+    );
+    const data = await fetchAccountDetails();
+    const account = data.account;
+    const user = data.user;
+    const transactions = response.data;
+    const tableBody = document.getElementById('tableBody');
+    let historyHTML = ``;
+    transactions.map((transaction) => {
+      let transactionHTML = `<tr
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseRow${transaction.id}"
+              aria-expanded="false"
+              aria-controls="collapseRow${transaction.id}"
+            ><td class="fw-bold">${transaction.formatted_date}</td>
+              <td>${transaction.transaction_type}</td>
+           ${
+             transaction.reciever_account == account.id
+               ? `<td class="text-danger"></td><td class="text-success">${transaction.amount}</td><td class="fw-bold">${transaction.reciever_new_balance}</td>`
+               : `<td class="text-danger">${transaction.amount}</td><td class="text-success"></td><td class="fw-bold">${transaction.sender_new_balance}</td>`
+           }
+
+            </tr>
+            <tr
+              id="collapseRow${transaction.id}"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingOne"
+              data-bs-parent="#tableAccordion"
+            >
+              <td colspan="5">
+                <div class="p-3">
+                  <strong>Details:</strong> ${transaction.details}
+                </div>
+              </td>
+            </tr>`;
+      historyHTML += transactionHTML;
+    });
+    tableBody.innerHTML = historyHTML;
+  };
+  addEventListener('DOMContentLoaded', async (event) => {
+    await fetchAccount();
+    await fetchHistory();
   });
 </script>
