@@ -15,7 +15,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link href="./assets/css/style.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
+    <script src="../../js/general.js"></script>
     <title>My Account</title>
   </head>
   <body>
@@ -39,7 +40,7 @@
               <a class="nav-link text-purple" href="#">My Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link bg-purple login-txt" href="./index.html"
+              <a class="nav-link bg-purple login-txt" id="logoutBtn" href="#"
                 >Logout</a
               >
             </li>
@@ -323,13 +324,9 @@
                <p><strong>Amount:</strong> ${amount}</p>`;
       } else if (transactionType === 'payment') {
         const paymentType = document.getElementById('paymentType').value;
-        const firstLetter = paymentType.charAt(0);
-        const capitalizedLetter = firstLetter.toUpperCase();
-        const remainingLetters = paymentType.slice(1);
-        const capitalizedType = capitalizedLetter + remainingLetters;
         const amount = document.getElementById('paymentAmount').value;
         details = `<p><strong>Transaction Type:</strong> Payment</p>
-               <p><strong>Type:</strong> ${capitalizedType}</p>
+               <p><strong>Type:</strong> ${paymentType}</p>
                <p><strong>Amount:</strong> ${amount}</p>`;
       }
 

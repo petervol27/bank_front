@@ -15,7 +15,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link href="./assets/css/style.css" rel="stylesheet" />
+    <link href="../../css/style.css" rel="stylesheet" />
+    <script src="../../js/general.js"></script>
     <title>My Account</title>
   </head>
   <body>
@@ -41,7 +42,7 @@
               <a class="nav-link text-purple" href="#">My Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link bg-purple login-txt" href="./index.html"
+              <a class="nav-link bg-purple login-txt" id="logoutBtn" href="#"
                 >Logout</a
               >
             </li>
@@ -79,58 +80,7 @@
               <th>Balance</th>
             </tr>
           </thead>
-          <tbody id="tableBody">
-            <tr
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseRow1"
-              aria-expanded="false"
-              aria-controls="collapseRow1"
-            >
-              <td class="fw-bold">Monday 1.1.1</td>
-              <td>Salary</td>
-              <td></td>
-              <td class="text-success">100</td>
-              <td class="fw-bold">100</td>
-            </tr>
-            <tr
-              id="collapseRow1"
-              class="accordion-collapse collapse"
-              aria-labelledby="headingOne"
-              data-bs-parent="#tableAccordion"
-            >
-              <td colspan="5">
-                <div class="p-3">
-                  <strong>Details:</strong> This is additional information about
-                  the salary for Monday 1.1.1.
-                </div>
-              </td>
-            </tr>
-            <tr
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseRow2"
-              aria-expanded="false"
-              aria-controls="collapseRow2"
-            >
-              <td class="fw-bold">Tuesday 2.1.1</td>
-              <td>Transfer</td>
-              <td class="text-danger">50</td>
-              <td class="text-success"></td>
-              <td class="fw-bold">50</td>
-            </tr>
-            <tr
-              id="collapseRow2"
-              class="accordion-collapse collapse"
-              aria-labelledby="headingTwo"
-              data-bs-parent="#tableAccordion"
-            >
-              <td colspan="5">
-                <div class="p-3">
-                  <strong>Details:</strong> This is additional information about
-                  the transfer for Tuesday 2.1.1.
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="tableBody"></tbody>
         </table>
       </div>
     </main>
@@ -150,6 +100,7 @@
   </body>
 </html>
 <script>
+  const logoutBtn = document.getElementById('logoutBtn');
   const accountHeading = document.getElementById('accountHeading');
   const accountInfo = document.getElementById('accountInfo');
   const fetchAccountDetails = async () => {
@@ -223,8 +174,12 @@
     });
     tableBody.innerHTML = historyHTML;
   };
+  window.onload = () => {
+    checkLogin();
+  };
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchAccount();
     await fetchHistory();
   });
+  logoutBtn.addEventListener('click', logout);
 </script>

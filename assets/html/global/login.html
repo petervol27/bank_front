@@ -15,19 +15,19 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link href="./assets/css/style.css" rel="stylesheet" />
-    <title>Register</title>
+    <link href="../../css/style.css" rel="stylesheet" />
+    <title>Login</title>
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-sm bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="./index.html"
+          <a class="navbar-brand" href="../../../index.html"
             ><h3 class="text-purple">Neo Banking</h3></a
           >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link text-purple active" href="./register.html"
+              <a class="nav-link text-purple" href="./register.html"
                 >Register</a
               >
             </li>
@@ -52,8 +52,8 @@
       </nav>
     </header>
     <main class="text-center">
-      <h1>Register</h1>
-      <form id="registerForm" class="p-3 m-3 w-25 mx-auto bg-light">
+      <h1>Login</h1>
+      <form id="loginForm" class="p-3 m-3 w-25 mx-auto bg-light">
         <div>
           <label class="form-label" for="username">Username:</label
           ><input
@@ -72,44 +72,7 @@
             type="password"
           />
         </div>
-        <div>
-          <label class="form-label" for="email">Email:</label
-          ><input id="email" name="email" class="form-control" type="email" />
-        </div>
-        <div>
-          <label class="form-label" for="fname">First Name:</label
-          ><input id="fname" name="fname" class="form-control" type="text" />
-        </div>
-        <div>
-          <label class="form-label" for="lname">Last Name:</label
-          ><input id="lname" name="lname" class="form-control" type="text" />
-        </div>
-        <div>
-          <label class="form-label" for="phone">Phone:</label
-          ><input id="phone" name="phone" class="form-control" type="number" />
-        </div>
-        <div>
-          <label class="form-label" for="address">Address:</label
-          ><input
-            id="address"
-            name="address"
-            class="form-control"
-            type="text"
-          />
-        </div>
-        <div>
-          <label class="form-label" for="citizen_num">Citizen Number:</label
-          ><input
-            id="citizen_num"
-            name="citizen_num"
-            class="form-control"
-            type="number"
-          />
-        </div>
-
-        <button type="submit" class="btn bg-purple mt-3 form-btn">
-          Register
-        </button>
+        <button type="submit" class="btn bg-purple mt-3 form-btn">Login</button>
         <p id="errortxt" class="text-danger"></p>
       </form>
     </main>
@@ -142,64 +105,27 @@
 </html>
 <script>
   const errortxt = document.getElementById('errortxt');
-
-  const form = document.getElementById('registerForm');
-  const register = async (event) => {
+  errortxt.innerHTML = '';
+  const form = document.getElementById('loginForm');
+  const login = async (event) => {
     event.preventDefault();
-    errortxt.innerHTML = '';
     const formData = new FormData(form);
     const username = formData.get('username');
     const password = formData.get('password');
-    const phone = formData.get('phone');
-    const fname = formData.get('fname');
-    const lname = formData.get('lname');
-    const address = formData.get('address');
-    const citizenNum = formData.get('citizen_num');
-    const email = formData.get('email');
-    const regData = {
-      username: username,
-      password: password,
-      phone: phone,
-      fname: fname,
-      lname: lname,
-      address: address,
-      citizen_num: citizenNum,
-      email: email,
-    };
-    const formValidationEmpty = Object.values(regData).every(
-      (value) => value && value.trim() !== ''
-    );
-    if (!formValidationEmpty) {
-      errortxt.innerHTML = 'You must fill in all fields!';
-      return;
-    }
     try {
-      const response = await axios.post(
-        'http://127.0.0.1:8000/users/register/',
-        regData
-      );
-      alert('Thank you for joining us, we are creating your account now!');
-
-      const loginResponse = await axios.post('http://127.0.0.1:8000/login/', {
+      const response = await axios.post('http://127.0.0.1:8000/login/', {
         username: username,
         password: password,
       });
-      const access = loginResponse.data.access;
-      const refresh = loginResponse.data.refresh;
+      const access = response.data.access;
+      const refresh = response.data.refresh;
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
-      const createAccount = await axios.post(
-        'http://127.0.0.1:8000/accounts/auto_create/',
-        {},
-        {
-          headers: { Authorization: `Bearer ${access}` },
-        }
-      );
-      console.log(createAccount.data);
-      window.location.href = 'account.html';
+      alert('You are being redirected to your account');
+      window.location.href = '../app/account.html';
     } catch (error) {
-      errortxt.innerHTML = 'Something went wrong please check Credentials!';
+      errortxt.innerHTML = 'Wrong Credentials';
     }
   };
-  form.addEventListener('submit', register);
+  form.addEventListener('submit', login);
 </script>
