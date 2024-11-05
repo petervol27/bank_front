@@ -19,7 +19,8 @@
 }
 .login-txt:hover,
 .join-btn:hover,
-.join-btn:active {
+.join-btn:active,
+.login-txt:focus {
   color: #94d82d !important;
   font-weight: 600 !important;
   background-color: #461f93 !important;
