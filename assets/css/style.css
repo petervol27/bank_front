@@ -73,3 +73,6 @@
 .table-hover tbody .accordion-collapse.collapse:hover {
   cursor: default;
 }
+.branch-img {
+  height: 250px;
+}

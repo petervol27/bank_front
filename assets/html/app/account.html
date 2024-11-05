@@ -16,7 +16,7 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="../../css/style.css" rel="stylesheet" />
-    <script src="../../js/general.js"></script>
+    <script src="../../js/general.js" defer></script>
     <title>My Account</title>
   </head>
   <body>
@@ -59,15 +59,32 @@
       <div class="accordion container" id="tableAccordion">
         <form
           class="container d-flex justify-content-center align-items-center gap-2 mb-3"
-          id="searchForm"
+          id="withdrawDepositForm"
         >
           <input
-            type="search"
+            type="number"
             class="form-control w-25"
-            placeholder="Search for Transaction"
+            placeholder="Enter Amount Here"
+            id="amountInput"
+            required
           />
 
-          <button class="btn form-btn bg-purple" type="submit">Search</button>
+          <button
+            class="btn btn-danger"
+            type="submit"
+            name="action"
+            value="withdraw"
+          >
+            Withdraw
+          </button>
+          <button
+            class="btn btn-primary"
+            type="submit"
+            name="action"
+            value="deposit"
+          >
+            Deposit
+          </button>
         </form>
 
         <table class="table table-hover">
@@ -100,7 +117,6 @@
   </body>
 </html>
 <script>
-  const logoutBtn = document.getElementById('logoutBtn');
   const accountHeading = document.getElementById('accountHeading');
   const accountInfo = document.getElementById('accountInfo');
   const fetchAccountDetails = async () => {
@@ -174,12 +190,61 @@
     });
     tableBody.innerHTML = historyHTML;
   };
-  window.onload = () => {
-    checkLogin();
-  };
+  document
+    .getElementById('withdrawDepositForm')
+    .addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const amount = document.getElementById('amountInput').value;
+
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+      }
+      const action = event.submitter.value;
+      const access = localStorage.getItem('access_token');
+      const data = await fetchAccountDetails();
+      const account = data.account.id;
+      if (action === 'withdraw') {
+        console.log(`Withdrawing amount: ${amount}`);
+        const details = `Withdrew ${amount} from account`;
+        const newTransaction = {
+          transaction_type: action,
+          reciever_account: null,
+          amount: amount,
+          details: details,
+          sender_account: account,
+        };
+        const response = await axios.post(
+          'http://127.0.0.1:8000/transactions/',
+          newTransaction,
+          {
+            headers: { Authorization: `Bearer ${access}` },
+          }
+        );
+        alert(`You Withdrew ${amount} succesfully!`);
+        window.location.reload();
+      } else if (action === 'deposit') {
+        const details = `Deposited ${amount} to account`;
+        const newTransaction = {
+          transaction_type: action,
+          reciever_account: account,
+          amount: amount,
+          details: details,
+          sender_account: null,
+        };
+        const response = await axios.post(
+          'http://127.0.0.1:8000/transactions/',
+          newTransaction,
+          {
+            headers: { Authorization: `Bearer ${access}` },
+          }
+        );
+        alert(`You Deposited ${amount} succesfully!`);
+        window.location.reload();
+      }
+    });
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchAccount();
     await fetchHistory();
   });
-  logoutBtn.addEventListener('click', logout);
 </script>

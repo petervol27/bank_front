@@ -32,7 +32,9 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link text-purple" href="#">Branches</a>
+              <a class="nav-link text-purple" href="./branches.html"
+                >Branches</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link text-purple" href="./about.html">About Us</a>
@@ -141,6 +143,13 @@
   </body>
 </html>
 <script>
+  const fetchChoices = async () => {
+    const response = await axios.get(
+      'http://127.0.0.1:8000/accounts/branches/'
+    );
+    console.log(response.data);
+  };
+  fetchChoices();
   const errortxt = document.getElementById('errortxt');
 
   const form = document.getElementById('registerForm');
