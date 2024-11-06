@@ -126,11 +126,19 @@
   const form = document.getElementById('loanForm');
   const loanRequest = async (event) => {
     event.preventDefault();
-    console.log('started a request');
     const formData = new FormData(form);
     const amount = formData.get('amount');
     const payments = formData.get('payments');
-    console.log(payments);
+    const newLoan = { amount: amount, payments: payments };
+    const access = localStorage.getItem('access_token');
+    const response = await axios.post(
+      'http://127.0.0.1:8000/loans/request_loan/',
+      newLoan,
+      {
+        headers: { Authorization: `Bearer ${access}` },
+      }
+    );
+    console.log(response.data);
   };
   form.addEventListener('submit', loanRequest);
 </script>

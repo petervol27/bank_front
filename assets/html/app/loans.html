@@ -95,7 +95,7 @@
     } else {
       let finalHTML = ``;
       loans.map((loan) => {
-        let loanHTML = `<ul class="list-group m-3"><h3 class="text-center text-purple">Loan: <strong>${loan.number}</strong></h3><li class="list-group-item">Date Taken: ${loan.date_taken}</li><li class="list-group-item">Amount: ${loan.amount}</li><li class="list-group-item">Payments left: ${loan.payments}</li><li class="list-group-item">Due By: ${loan.date_finished}</li><a class="btn bg-purple form-btn w-25 mx-auto mt-3" href="./transactions.html">Pay Off</a></ul>`;
+        let loanHTML = `<ul class="list-group m-3"><h3 class="text-center text-purple">Loan: <strong>${loan.loan_number}</strong></h3><li class="list-group-item">Date Taken: ${loan.date_taken}</li><li class="list-group-item">Amount Taken: ${loan.amount}</li><li class="list-group-item">Payments: ${loan.payments}</li><li class="list-group-item">Due By: ${loan.date_finished}</li><li class="list-group-item">Left to pay: ${loan.left_to_pay}</li><a class="btn bg-purple form-btn w-25 mx-auto mt-3" href="./transactions.html">Pay Off</a></ul>`;
         finalHTML += loanHTML;
       });
       loanList.innerHTML = finalHTML;
