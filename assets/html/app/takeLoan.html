@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="../../css/style.css" rel="stylesheet" />
     <script src="../../js/general.js" defer></script>
-    <title>My Loans</title>
+    <title>Take a loan</title>
   </head>
   <body>
     <header>
@@ -53,8 +53,42 @@
         class="ms-3 mt-3 text-purple d-flex justify-content-between align-items-center"
         id="accountHeading"
       ></div>
-      <h1 class="text-center">Take A Loan Page</h1>
-      <!-- a simple form for a loan brah  -->
+      <div class="container text-center bg-light p-3">
+        <p class="fw-bold fs-4 text-purple">
+          Hello welcome to our loan request page, you may pick any amount for a
+          loan, payments will be divided between 6 months and 36 months, please
+          remember being late on your payment will be taxed heavily so please
+          make sure you pay on time thank you!
+        </p>
+      </div>
+      <form id="loanForm" class="container p-3 w-50 mx-auto bg-light my-3">
+        <h3 class="text-center text-purple fw-bold">Loan Request</h3>
+        <label class="form-label">Amount</label>
+        <input
+          class="form-control"
+          type="number"
+          name="amount"
+          id="amount"
+          required
+        />
+        <label class="form-label mt-3"
+          >Payments: <span id="paymentValue"></span></label
+        ><input
+          required
+          class="form-control"
+          type="range"
+          min="6"
+          max="36"
+          name="payments"
+          id="payments"
+          oninput="updatePaymentValue(this.value)"
+        />
+        <div class="text-center mt-3">
+          <button class="btn form-btn bg-purple text-center" type="submit">
+            Request Loan
+          </button>
+        </div>
+      </form>
     </main>
     <footer class="bg-light p-3 text-center">
       <h1 class="text-purple">Neo Banking</h1>
@@ -86,4 +120,17 @@
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchAccount();
   });
+  function updatePaymentValue(value) {
+    document.getElementById('paymentValue').textContent = value;
+  }
+  const form = document.getElementById('loanForm');
+  const loanRequest = async (event) => {
+    event.preventDefault();
+    console.log('started a request');
+    const formData = new FormData(form);
+    const amount = formData.get('amount');
+    const payments = formData.get('payments');
+    console.log(payments);
+  };
+  form.addEventListener('submit', loanRequest);
 </script>
