@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="../../css/style.css" rel="stylesheet" />
     <script src="../../js/general.js" defer></script>
-    <title>My Loans</title>
+    <title>My Cards</title>
   </head>
   <body>
     <header>
@@ -31,12 +31,12 @@
               <a class="nav-link text-purple" href="./account.html">Overview</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-purple active" href="./loans.html"
-                >My Loans</a
-              >
+              <a class="nav-link text-purple" href="./loans.html">My Loans</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-purple" href="./cards.html">My Cards</a>
+              <a class="nav-link text-purple active" href="./cards.html"
+                >My Cards</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link text-purple" href="#">My Profile</a>
@@ -57,7 +57,7 @@
       ></div>
       <div
         class="container bg-light py-2 mt-2 mb-3 border rounded"
-        id="loanList"
+        id="cardList"
       ></div>
     </main>
     <footer class="bg-light p-3 text-center">
@@ -77,7 +77,7 @@
 </html>
 <script>
   const accountHeading = document.getElementById('accountHeading');
-  const loanList = document.getElementById('loanList');
+  const cardList = document.getElementById('cardList');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
     const response = await axios.get('http://127.0.0.1:8000/accounts/', {
@@ -85,24 +85,23 @@
     });
     const account = response.data.account;
     const userName = response.data.user.fname + ' ' + response.data.user.lname;
-    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3" href="./takeLoan.html">Take a Loan</a>`;
+    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3" href="./getCard.html">Get a Card</a>`;
   };
-  const fetchLoans = async () => {
-    const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/loans/', {
-      headers: { Authorization: `Bearer ${access}` },
-    });
-    const loan = response.data;
-    if (loan == 0) {
-      let loanHTML = `<h1 class="text-purple text-center">No Loans</h1>`;
-      loanList.innerHTML = loanHTML;
-    } else {
-      let loanHTML = `<ul class="list-group m-3"><h3 class="text-center text-purple">Loan: <strong>${loan.loan_number}</strong></h3><li class="list-group-item">Date Taken: ${loan.date_taken}</li><li class="list-group-item">Amount Taken: ${loan.amount}</li><li class="list-group-item">Spread To: ${loan.payments} Payments</li><li class="list-group-item">Due By: ${loan.date_finished}</li><li class="list-group-item">Left to Pay: ${loan.left_to_pay}</li><a class="btn bg-purple form-btn w-25 mx-auto mt-3" href="./transactions.html">Pay Off</a></ul>`;
-      loanList.innerHTML = loanHTML;
-    }
-  };
+  // const fetchLoans = async () => {
+  //   const access = localStorage.getItem('access_token');
+  //   const response = await axios.get('http://127.0.0.1:8000/loans/', {
+  //     headers: { Authorization: `Bearer ${access}` },
+  //   });
+  //   const loan = response.data;
+  //   if (loan == 0) {
+  //     let loanHTML = `<h1 class="text-purple text-center">No Loans</h1>`;
+  //     loanList.innerHTML = loanHTML;
+  //   } else {
+  //     let loanHTML = `<ul class="list-group m-3"><h3 class="text-center text-purple">Loan: <strong>${loan.loan_number}</strong></h3><li class="list-group-item">Date Taken: ${loan.date_taken}</li><li class="list-group-item">Amount Taken: ${loan.amount}</li><li class="list-group-item">Spread To: ${loan.payments} Payments</li><li class="list-group-item">Due By: ${loan.date_finished}</li><li class="list-group-item">Left to Pay: ${loan.left_to_pay}</li><a class="btn bg-purple form-btn w-25 mx-auto mt-3" href="./transactions.html">Pay Off</a></ul>`;
+  //     loanList.innerHTML = loanHTML;
+  //   }
+  // };
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchAccount();
-    await fetchLoans();
   });
 </script>

@@ -34,7 +34,7 @@
               <a class="nav-link text-purple" href="./loans.html">My Loans</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-purple" href="#">My Credit</a>
+              <a class="nav-link text-purple" href="./cards.html">My Cards</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-purple" href="#">My Profile</a>
@@ -155,8 +155,12 @@
     const types = response.data;
     let typeHTML = `<option value="">Select Transaction Type</option>`;
     types.map((type) => {
-      console.log(type);
-      if (type[0] == 'withdraw' || type[0] == 'deposit') {
+      if (
+        type[0] == 'withdraw' ||
+        type[0] == 'deposit' ||
+        type[0] == 'loan' ||
+        type[0] == 'credit'
+      ) {
       } else {
         let currentHTML = `<option value="${type[0]}">${type[1]}</option>`;
         typeHTML += currentHTML;
@@ -225,7 +229,7 @@
       <input type="number" step=".01" placeholder="Amount" name="paymentAmount" id="paymentAmount" class="form-control mb-2">
       <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
     `,
-    other: `
+    credit_usage: `
       <h5 class="text-purple">Other Transactions</h5>
       <input type="text" placeholder="Description" name="description" id="description" class="form-control mb-2">
       <input type="number" step=".01" placeholder="Amount" name="otherAmount" id="otherAmount" class="form-control mb-2">
@@ -251,7 +255,7 @@
 
   const makeTransaction = async (
     type,
-    reciever,
+    reciever = null,
     amount,
     details,
     sender = null
@@ -328,6 +332,25 @@
       } else if (transactionType === 'payment') {
         const paymentType = document.getElementById('paymentType').value;
         const amount = document.getElementById('paymentAmount').value;
+        if (paymentType == 'loan') {
+          const transactionDetails = `payed ${amount} for loan`;
+          await makeTransaction(
+            paymentType,
+            null,
+            amount,
+            transactionDetails,
+            account.id
+          );
+        } else {
+          // await makeTransaction(
+          //   paymentType,
+          //   null,
+          //   amount,
+          //   transactionDetails,
+          //   account.id
+          // );
+          console.log('paying for credit');
+        }
         details = `<p><strong>Transaction Type:</strong> Payment</p>
                <p><strong>Type:</strong> ${paymentType}</p>
                <p><strong>Amount:</strong> ${amount}</p>`;

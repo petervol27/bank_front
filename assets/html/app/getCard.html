@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="../../css/style.css" rel="stylesheet" />
     <script src="../../js/general.js" defer></script>
-    <title>Take a loan</title>
+    <title>Get A Card</title>
   </head>
   <body>
     <header>
@@ -55,37 +55,39 @@
       ></div>
       <div class="container text-center bg-light p-3">
         <p class="fw-bold fs-4 text-purple">
-          Hello welcome to our loan request page, you may pick any amount for a
-          loan, payments will be divided between 6 months and 36 months, please
-          remember being late on your payment will be taxed heavily so please
-          make sure you pay on time thank you!
+          Hello welcome to our credit cards request page, you may pick any
+          manufactor for a card, payments will be taken during the 1st of each
+          month or 10th of each month, please remember being late on your
+          payment will be taxed heavily so please make sure you pay on time
+          thank you!
         </p>
       </div>
-      <form id="loanForm" class="container p-3 w-50 mx-auto bg-light my-3">
-        <h3 class="text-center text-purple fw-bold">Loan Request</h3>
-        <label class="form-label">Amount</label>
-        <input
-          class="form-control"
-          type="number"
-          name="amount"
-          id="amount"
-          required
-        />
+      <form id="cardForm" class="container p-3 w-50 mx-auto bg-light my-3">
+        <h3 class="text-center text-purple fw-bold">Card Request</h3>
+        <label class="form-label">Manufactorer:</label>
+        <select
+          class="form-select"
+          id="manufactorOptions"
+          name="manufactorOptions"
+        ></select>
+        <label class="form-label">Payment Day:</label>
+        <select class="form-select" id="payOptions" name="payOptions"></select>
         <label class="form-label mt-3"
-          >Payments: <span id="paymentValue"></span></label
+          >Credit Limit: <span id="creditValue"></span></label
         ><input
           required
           class="form-control"
           type="range"
-          min="6"
-          max="36"
-          name="payments"
-          id="payments"
-          oninput="updatePaymentValue(this.value)"
+          min="1000"
+          max="10000"
+          name="limit"
+          id="limit"
+          step="1000"
+          oninput="updateCreditValue(this.value)"
         />
         <div class="text-center mt-3">
           <button class="btn form-btn bg-purple text-center" type="submit">
-            Request Loan
+            Request Card
           </button>
         </div>
       </form>
@@ -107,6 +109,7 @@
 </html>
 <script>
   const accountHeading = document.getElementById('accountHeading');
+  const form = document.getElementById('cardForm');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
     const response = await axios.get('http://127.0.0.1:8000/accounts/', {
@@ -116,37 +119,82 @@
     const userName = response.data.user.fname + ' ' + response.data.user.lname;
     accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3" href="./takeLoan.html">Take a Loan</a>`;
   };
-
-  addEventListener('DOMContentLoaded', async (event) => {
-    await fetchAccount();
-  });
-  const updatePaymentValue = (value) => {
-    document.getElementById('paymentValue').textContent = value;
-  };
-  const form = document.getElementById('loanForm');
-  const loanRequest = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const amount = formData.get('amount');
-    const payments = formData.get('payments');
-    const newLoan = { amount: amount, payments: payments };
+  const fetchFormData = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.post(
-      'http://127.0.0.1:8000/loans/request_loan/',
-      newLoan,
+    const response = await axios.get(
+      'http://127.0.0.1:8000/cards/get_form_data/',
       {
         headers: { Authorization: `Bearer ${access}` },
       }
     );
-    const check = response.data;
-    if (response.data.failure) {
-      alert('sorry you already have an active loan');
-      window.location.href = 'account.html';
-      return;
-    }
-    const loanAmount = response.data.amount;
-    alert(`${loanAmount} is being transfered to your account now!`);
-    window.location.href = 'account.html';
+    console.log(response.data);
+    const manufactorers = response.data.manufactorers;
+    const paymentDays = response.data.payment_days;
+    const manufactorOptions = document.getElementById('manufactorOptions');
+    const payOptions = document.getElementById('payOptions');
+    let payDaysHTML = ``;
+    let manufactorersHTML = ``;
+    paymentDays.map((payDay) => {
+      let objectHTML = `<option value='${payDay[0]}'>${payDay[1]}</option>`;
+      payDaysHTML += objectHTML;
+    });
+    manufactorers.map((manufactorer) => {
+      let objectHTML = `<option value='${manufactorer[0]}'>${manufactorer[0]}</option>`;
+      manufactorersHTML += objectHTML;
+    });
+    payOptions.innerHTML = payDaysHTML;
+    manufactorOptions.innerHTML = manufactorersHTML;
   };
-  form.addEventListener('submit', loanRequest);
+
+  addEventListener('DOMContentLoaded', async (event) => {
+    await fetchAccount();
+    await fetchFormData();
+  });
+
+  const updateCreditValue = (value) => {
+    document.getElementById('creditValue').textContent = value;
+  };
+  const cardRequest = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const limit = formData.get('limit');
+    const payOptions = formData.get('payOptions');
+    const manufactorOptions = formData.get('manufactorOptions');
+    const access = localStorage.getItem('access_token');
+    const newCard = {
+      manufactorer: manufactorOptions,
+      credit_limit: limit,
+      payment_data: payOptions,
+    };
+    const response = await axios.post('http://127.0.0.1:8000/cards/', newCard, {
+      headers: { Authorization: `Bearer ${access}` },
+    });
+    console.log(response.data);
+  };
+  form.addEventListener('submit', cardRequest);
+  // const loanRequest = async (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(form);
+  //   const amount = formData.get('amount');
+  //   const payments = formData.get('payments');
+  //   const newLoan = { amount: amount, payments: payments };
+  //   const access = localStorage.getItem('access_token');
+  //   const response = await axios.post(
+  //     'http://127.0.0.1:8000/loans/request_loan/',
+  //     newLoan,
+  //     {
+  //       headers: { Authorization: `Bearer ${access}` },
+  //     }
+  //   );
+  //   const check = response.data;
+  //   if (response.data.failure) {
+  //     alert('sorry you already have an active loan');
+  //     window.location.href = 'account.html';
+  //     return;
+  //   }
+  //   const loanAmount = response.data.amount;
+  //   alert(`${loanAmount} is being transfered to your account now!`);
+  //   window.location.href = 'account.html';
+  // };
+  // form.addEventListener('submit', loanRequest);
 </script>
