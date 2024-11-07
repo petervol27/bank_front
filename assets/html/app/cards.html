@@ -55,10 +55,19 @@
         class="ms-3 mt-3 text-purple d-flex justify-content-between align-items-center"
         id="accountHeading"
       ></div>
-      <div
-        class="container bg-light py-2 mt-2 mb-3 border rounded"
-        id="cardList"
-      ></div>
+      <div class="container">
+        <div class="pt-2 mt-2" id="cardList"></div>
+        <table class="table table-hover">
+          <thead class="table-active">
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
     </main>
     <footer class="bg-light p-3 text-center">
       <h1 class="text-purple">Neo Banking</h1>
@@ -78,6 +87,7 @@
 <script>
   const accountHeading = document.getElementById('accountHeading');
   const cardList = document.getElementById('cardList');
+  const tableBody = document.getElementById('tableBody');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
     const response = await axios.get('http://127.0.0.1:8000/accounts/', {
@@ -87,21 +97,60 @@
     const userName = response.data.user.fname + ' ' + response.data.user.lname;
     accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3" href="./getCard.html">Get a Card</a>`;
   };
-  // const fetchLoans = async () => {
-  //   const access = localStorage.getItem('access_token');
-  //   const response = await axios.get('http://127.0.0.1:8000/loans/', {
-  //     headers: { Authorization: `Bearer ${access}` },
-  //   });
-  //   const loan = response.data;
-  //   if (loan == 0) {
-  //     let loanHTML = `<h1 class="text-purple text-center">No Loans</h1>`;
-  //     loanList.innerHTML = loanHTML;
-  //   } else {
-  //     let loanHTML = `<ul class="list-group m-3"><h3 class="text-center text-purple">Loan: <strong>${loan.loan_number}</strong></h3><li class="list-group-item">Date Taken: ${loan.date_taken}</li><li class="list-group-item">Amount Taken: ${loan.amount}</li><li class="list-group-item">Spread To: ${loan.payments} Payments</li><li class="list-group-item">Due By: ${loan.date_finished}</li><li class="list-group-item">Left to Pay: ${loan.left_to_pay}</li><a class="btn bg-purple form-btn w-25 mx-auto mt-3" href="./transactions.html">Pay Off</a></ul>`;
-  //     loanList.innerHTML = loanHTML;
-  //   }
-  // };
+  const fetchCard = async () => {
+    const access = localStorage.getItem('access_token');
+    const response = await axios.get('http://127.0.0.1:8000/cards/get_card/', {
+      headers: { Authorization: `Bearer ${access}` },
+    });
+    const card = response.data;
+    console.log(card);
+    if (card == 0) {
+      cardList.innerHTML = `<h1 class="text-purple text-center">No Cards available</h1>`;
+      return;
+    }
+    let cardHTML = `<div class="card">
+    <div class="card-header text-center fw-bold">
+      ${card.card_number} - ${card.expiration_date} - ${card.cvv}
+    </div>
+    <div class="card-body text-center">
+      <h5 class="card-title">Owner: ${card.owner_name}</h5>
+      <p class="card-text">payment date: ${card.payment_date} of each month</p>
+      <p class="card-text">Manufactorer: <strong>${card.manufacturer}</strong></p>
+      <p class="card-text">Credit Limit: <strong>${card.credit_limit}</strong></p>
+      <p class="card-text">Credit Used: <strong>${card.current_credit_used}</strong></p>
+      <a class="btn bg-purple form-btn" href="transactions.html">Use Card</a>
+    </div>
+  </div>`;
+    cardList.innerHTML = cardHTML;
+  };
+  const fetchCardHistory = async () => {
+    const access = localStorage.getItem('access_token');
+    const response = await axios.get(
+      'http://127.0.0.1:8000/cards/card_history/',
+      {
+        headers: { Authorization: `Bearer ${access}` },
+      }
+    );
+
+    const transactions = response.data;
+    if (transactions == 0) {
+      return;
+    }
+    let finalHTML = ``;
+    transactions.map((transaction) => {
+      let transactionHTML = `<tr>
+        <td>${transaction.formatted_date}</td>
+        <td>${transaction.amount}</td>
+        <td>${transaction.details}</td>
+        </tr>`;
+      finalHTML += transactionHTML;
+    });
+    tableBody.innerHTML = finalHTML;
+  };
+  // for the card history we will add a table
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchAccount();
+    await fetchCard();
+    await fetchCardHistory();
   });
 </script>

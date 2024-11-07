@@ -162,39 +162,20 @@
     const manufactorOptions = formData.get('manufactorOptions');
     const access = localStorage.getItem('access_token');
     const newCard = {
-      manufactorer: manufactorOptions,
+      manufacturer: manufactorOptions,
       credit_limit: limit,
-      payment_data: payOptions,
+      payment_date: payOptions,
     };
     const response = await axios.post('http://127.0.0.1:8000/cards/', newCard, {
       headers: { Authorization: `Bearer ${access}` },
     });
-    console.log(response.data);
+    if (response.data.failure) {
+      alert(response.data.failure);
+      window.location.href = 'cards.html';
+    } else {
+      alert('congratulations on your new card!');
+      window.location.href = 'cards.html';
+    }
   };
   form.addEventListener('submit', cardRequest);
-  // const loanRequest = async (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData(form);
-  //   const amount = formData.get('amount');
-  //   const payments = formData.get('payments');
-  //   const newLoan = { amount: amount, payments: payments };
-  //   const access = localStorage.getItem('access_token');
-  //   const response = await axios.post(
-  //     'http://127.0.0.1:8000/loans/request_loan/',
-  //     newLoan,
-  //     {
-  //       headers: { Authorization: `Bearer ${access}` },
-  //     }
-  //   );
-  //   const check = response.data;
-  //   if (response.data.failure) {
-  //     alert('sorry you already have an active loan');
-  //     window.location.href = 'account.html';
-  //     return;
-  //   }
-  //   const loanAmount = response.data.amount;
-  //   alert(`${loanAmount} is being transfered to your account now!`);
-  //   window.location.href = 'account.html';
-  // };
-  // form.addEventListener('submit', loanRequest);
 </script>

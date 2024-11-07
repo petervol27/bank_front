@@ -36,5 +36,4 @@ const capitalize = (word) => word.charAt(0).toUpperCase() + word.slice(1);
 const logoutBtn = document.getElementById('logoutBtn');
 window.onload = async () => {
   logoutBtn.addEventListener('click', logout);
-  // await checkLogin();
 };
