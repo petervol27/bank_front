@@ -6,24 +6,41 @@ const refreshAccessToken = async () => {
     });
     const newAccessToken = response.data.access;
     localStorage.setItem('access_token', newAccessToken);
+    return;
   } catch (error) {
     alert('To keep your information safe please log in again');
-    window.location.href = '../../../index.html';
+    throw error;
+  }
+};
+
+const validateToken = async (token) => {
+  try {
+    const response = await axios.get('http://127.0.0.1:8000/users/validate/', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (response.data.valid) {
+      return;
+    }
+  } catch (error) {
+    await refreshAccessToken();
+    window.location.reload();
   }
 };
 
 const checkLogin = async () => {
   const access = localStorage.getItem('access_token');
-  if (access) {
-    try {
-      // await refreshAccessToken();
-      window.location.reload();
-    } catch (error) {
-      window.location.href = '../../../index.html';
+  try {
+    if (!access) {
+      throw new Error('no access token');
     }
+    await validateToken(access);
+    return;
+  } catch (error) {
+    window.location.href = '../../../index.html';
   }
 };
 
+const logoutBtn = document.getElementById('logoutBtn');
 const logout = () => {
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
@@ -33,7 +50,7 @@ const logout = () => {
 
 const capitalize = (word) => word.charAt(0).toUpperCase() + word.slice(1);
 
-const logoutBtn = document.getElementById('logoutBtn');
 window.onload = async () => {
   logoutBtn.addEventListener('click', logout);
+  await checkLogin();
 };
