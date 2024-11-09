@@ -114,7 +114,7 @@
     });
     const account = response.data.account;
     const userName = response.data.user.fname + ' ' + response.data.user.lname;
-    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> <a class="btn bg-purple login-txt text-white me-3" href="./takeLoan.html">Take a Loan</a>`;
+    accountHeading.innerHTML = `<h1>Welcome, <strong>${userName}!</strong></h1> `;
   };
 
   addEventListener('DOMContentLoaded', async (event) => {
