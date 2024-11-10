@@ -1,4 +1,4 @@
-const PRODHOST = 'https://bank-7aro.onrender.com';
+const PRODHOST = 'https://bank-zdpd.onrender.com';
 const DEVHOST = 'http://127.0.0.1:8000/';
 
 const logoutBtn = document.getElementById('logoutBtn');
