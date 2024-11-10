@@ -126,7 +126,7 @@
     const formData = new FormData(form);
     const amount = formData.get('amount');
     const payments = formData.get('payments');
-    const newLoan = { amount: number(amount), payments: payments };
+    const newLoan = { amount: Number(amount), payments: payments };
     const access = localStorage.getItem('access_token');
     const response = await axios.post(
       `${PRODHOST}/loans/request_loan/`,
