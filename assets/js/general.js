@@ -6,7 +6,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refresh_token');
   try {
-    const response = await axios.post('http://127.0.0.1:8000/refresh/', {
+    const response = await axios.post(`${PRODHOST}/refresh/`, {
       refresh: refreshToken,
     });
     const newAccessToken = response.data.access;
@@ -20,7 +20,7 @@ const refreshAccessToken = async () => {
 
 const validateToken = async (token) => {
   try {
-    const response = await axios.get('http://127.0.0.1:8000/users/validate/', {
+    const response = await axios.get(`${PRODHOST}/users/validate/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (response.data.valid) {

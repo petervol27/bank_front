@@ -143,15 +143,7 @@
   </body>
 </html>
 <script>
-  const fetchChoices = async () => {
-    const response = await axios.get(
-      'https://bank-7aro.onrender.com/accounts/branches/'
-    );
-    console.log(response.data);
-  };
-  fetchChoices();
   const errortxt = document.getElementById('errortxt');
-
   const form = document.getElementById('registerForm');
   const register = async (event) => {
     event.preventDefault();
