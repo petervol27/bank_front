@@ -199,9 +199,6 @@
     forms.transfer = transferForm;
   };
 
-  addEventListener('DOMcontentloaded', async (event) => {
-    await fetchData();
-  });
   const forms = {
     transfer: `
       <h5 class="text-purple">Transfer To Account</h5>
@@ -231,7 +228,9 @@
       <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
     `,
   };
-
+  addEventListener('DOMcontentloaded', async () => {
+    await fetchData();
+  });
   document
     .getElementById('transactionType')
     .addEventListener('change', function () {
