@@ -198,7 +198,9 @@
     forms.transfer = transferForm;
   };
 
-  addEventListener('DOMcontentloaded', await fetchData());
+  addEventListener('DOMcontentloaded', async () => {
+    await fetchData();
+  });
   const forms = {
     transfer: `
       <h5 class="text-purple">Transfer To Account</h5>
