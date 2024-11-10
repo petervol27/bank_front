@@ -125,6 +125,7 @@
       headers: { Authorization: `Bearer ${access}` },
     });
     const data = response.data;
+    console.log('got here');
     return data;
   };
   const fetchAccountDetails = async () => {
