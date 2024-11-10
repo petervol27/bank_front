@@ -109,7 +109,7 @@
   const accountHeading = document.getElementById('accountHeading');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+    const response = await axios.get(`${PRODHOST}/accounts/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const account = response.data.account;
@@ -132,7 +132,7 @@
     const newLoan = { amount: amount, payments: payments };
     const access = localStorage.getItem('access_token');
     const response = await axios.post(
-      'http://127.0.0.1:8000/loans/request_loan/',
+      `${PRODHOST}/loans/request_loan/`,
       newLoan,
       {
         headers: { Authorization: `Bearer ${access}` },

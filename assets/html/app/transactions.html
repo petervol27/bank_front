@@ -124,7 +124,7 @@
   const accountInfo = document.getElementById('accountInfo');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+    const response = await axios.get(`${PRODHOST}/accounts/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const data = response.data;
@@ -132,7 +132,7 @@
   };
   const fetchAccountDetails = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+    const response = await axios.get(`${PRODHOST}/accounts/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const account = response.data.account;
@@ -149,9 +149,7 @@
           }>${account.balance}</span></h3>`;
   };
   const fetchTransactionOptions = async () => {
-    const response = await axios.get(
-      'http://127.0.0.1:8000/transactions/types/'
-    );
+    const response = await axios.get(`${PRODHOST}/transactions/types/`);
     const types = response.data;
     let typeHTML = `<option value="">Select Transaction Type</option>`;
     types.map((type) => {
@@ -170,13 +168,10 @@
   };
   const fetchAccounts = async () => {
     const access = localStorage.getItem('access_token');
-    const accountResponse = await axios.get(
-      'http://127.0.0.1:8000/accounts/all/',
-      {
-        headers: { Authorization: `Bearer ${access}` },
-      }
-    );
-    const userResponse = await axios.get('http://127.0.0.1:8000/users/all/', {
+    const accountResponse = await axios.get(`${PRODHOST}/accounts/all/`, {
+      headers: { Authorization: `Bearer ${access}` },
+    });
+    const userResponse = await axios.get(`${PRODHOST}/users/all/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const accounts = accountResponse.data;
@@ -269,7 +264,7 @@
     };
     const access = localStorage.getItem('access_token');
     const response = await axios.post(
-      'http://127.0.0.1:8000/transactions/',
+      `${PRODHOST}/transactions/`,
       newTransaction,
       {
         headers: { Authorization: `Bearer ${access}` },
@@ -341,7 +336,7 @@
           };
           const access = localStorage.getItem('access_token');
           const response = await axios.post(
-            'http://127.0.0.1:8000/cards/use_card/',
+            `${PRODHOST}/cards/use_card/`,
             newTransaction,
             {
               headers: { Authorization: `Bearer ${access}` },

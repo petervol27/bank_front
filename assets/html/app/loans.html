@@ -80,7 +80,7 @@
   const loanList = document.getElementById('loanList');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+    const response = await axios.get(`${PRODHOST}/accounts/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const account = response.data.account;
@@ -89,7 +89,7 @@
   };
   const fetchLoans = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/loans/', {
+    const response = await axios.get(`${PRODHOST}/loans/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const loan = response.data;

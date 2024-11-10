@@ -112,7 +112,7 @@
   const form = document.getElementById('cardForm');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+    const response = await axios.get(`${PRODHOST}/accounts/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const account = response.data.account;
@@ -121,12 +121,9 @@
   };
   const fetchFormData = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get(
-      'http://127.0.0.1:8000/cards/get_form_data/',
-      {
-        headers: { Authorization: `Bearer ${access}` },
-      }
-    );
+    const response = await axios.get(`${PRODHOST}/cards/get_form_data/`, {
+      headers: { Authorization: `Bearer ${access}` },
+    });
     console.log(response.data);
     const manufactorers = response.data.manufactorers;
     const paymentDays = response.data.payment_days;
@@ -166,7 +163,7 @@
       credit_limit: limit,
       payment_date: payOptions,
     };
-    const response = await axios.post('http://127.0.0.1:8000/cards/', newCard, {
+    const response = await axios.post(`${PRODHOST}/cards/`, newCard, {
       headers: { Authorization: `Bearer ${access}` },
     });
     if (response.data.failure) {

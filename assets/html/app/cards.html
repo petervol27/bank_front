@@ -90,7 +90,7 @@
   const tableBody = document.getElementById('tableBody');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/accounts/', {
+    const response = await axios.get(`${PRODHOST}/accounts/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const account = response.data.account;
@@ -99,7 +99,7 @@
   };
   const fetchCard = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get('http://127.0.0.1:8000/cards/get_card/', {
+    const response = await axios.get(`${PRODHOST}/cards/get_card/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
     const card = response.data;
@@ -125,12 +125,9 @@
   };
   const fetchCardHistory = async () => {
     const access = localStorage.getItem('access_token');
-    const response = await axios.get(
-      'http://127.0.0.1:8000/cards/card_history/',
-      {
-        headers: { Authorization: `Bearer ${access}` },
-      }
-    );
+    const response = await axios.get(`${PRODHOST}/cards/card_history/`, {
+      headers: { Authorization: `Bearer ${access}` },
+    });
 
     const transactions = response.data;
     if (transactions == 0) {
