@@ -1,3 +1,8 @@
+const PRODHOST = 'https://bank-7aro.onrender.com';
+const DEVHOST = 'http://127.0.0.1:8000/';
+
+const logoutBtn = document.getElementById('logoutBtn');
+
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refresh_token');
   try {
@@ -40,7 +45,6 @@ const checkLogin = async () => {
   }
 };
 
-const logoutBtn = document.getElementById('logoutBtn');
 const logout = () => {
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');

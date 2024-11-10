@@ -145,7 +145,7 @@
 <script>
   const fetchChoices = async () => {
     const response = await axios.get(
-      'http://127.0.0.1:8000/accounts/branches/'
+      'https://bank-7aro.onrender.com/accounts/branches/'
     );
     console.log(response.data);
   };
@@ -184,21 +184,24 @@
     }
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/users/register/',
+        'https://bank-7aro.onrender.com/users/register/',
         regData
       );
       alert('Thank you for joining us, we are creating your account now!');
 
-      const loginResponse = await axios.post('http://127.0.0.1:8000/login/', {
-        username: username,
-        password: password,
-      });
+      const loginResponse = await axios.post(
+        'https://bank-7aro.onrender.com/login/',
+        {
+          username: username,
+          password: password,
+        }
+      );
       const access = loginResponse.data.access;
       const refresh = loginResponse.data.refresh;
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
       const createAccount = await axios.post(
-        'http://127.0.0.1:8000/accounts/auto_create/',
+        'https://bank-7aro.onrender.com/accounts/auto_create/',
         {},
         {
           headers: { Authorization: `Bearer ${access}` },

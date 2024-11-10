@@ -115,10 +115,13 @@
     const username = formData.get('username');
     const password = formData.get('password');
     try {
-      const response = await axios.post('http://127.0.0.1:8000/login/', {
-        username: username,
-        password: password,
-      });
+      const response = await axios.post(
+        'https://bank-7aro.onrender.com/login/',
+        {
+          username: username,
+          password: password,
+        }
+      );
       const access = response.data.access;
       const refresh = response.data.refresh;
       localStorage.setItem('access_token', access);

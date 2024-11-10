@@ -87,7 +87,7 @@
   const branchList = document.getElementById('branchList');
   const fetchChoices = async () => {
     const response = await axios.get(
-      'http://127.0.0.1:8000/accounts/branches/'
+      'https://bank-7aro.onrender.com/accounts/branches/'
     );
     const branches = response.data;
     let branchesHTML = ``;
