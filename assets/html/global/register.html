@@ -176,13 +176,13 @@
     }
     try {
       const response = await axios.post(
-        'https://bank-7aro.onrender.com/users/register/',
+        'https://bank-zdpd.onrender.com/users/register/',
         regData
       );
       alert('Thank you for joining us, we are creating your account now!');
 
       const loginResponse = await axios.post(
-        'https://bank-7aro.onrender.com/login/',
+        'https://bank-zdpd.onrender.com/login/',
         {
           username: username,
           password: password,
@@ -193,7 +193,7 @@
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
       const createAccount = await axios.post(
-        'https://bank-7aro.onrender.com/accounts/auto_create/',
+        'https://bank-zdpd.onrender.com/accounts/auto_create/',
         {},
         {
           headers: { Authorization: `Bearer ${access}` },
