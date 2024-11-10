@@ -198,7 +198,7 @@
     forms.transfer = transferForm;
   };
 
-  addEventListener('DOMcontentloaded', async () => {
+  addEventListener('DOMcontentloaded', async (event) => {
     await fetchData();
   });
   const forms = {
