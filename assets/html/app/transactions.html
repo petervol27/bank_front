@@ -117,7 +117,7 @@
     </footer>
   </body>
 </html>
-<script defer>
+<script>
   const accountInfo = document.getElementById('accountInfo');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
@@ -194,184 +194,184 @@
   addEventListener('DOMcontentloaded', async () => {
     await fetchData();
   });
-  const forms = {
-    transfer: `
-      <h5 class="text-purple">Transfer To Account</h5>
-      <select class="form-select mb-2" id="recieverAccount"></select>
-      <input type="number" step=".01" placeholder="Amount" name="transferAmount" id="transferAmount" class="form-control mb-2">
-      <button type="submit" class="btn form-btn bg-purple">Submit Transfer</button>
-    `,
-    salary: `
-      <h5 class="text-purple">Salary Form</h5>
-      <input type="text" placeholder="Employer Name" name="employerName" id="employerName" class="form-control mb-2">
-      <input type="number" step=".01" placeholder="Salary Amount" name="salaryAmount" id="salaryAmount" class="form-control mb-2">
-      <button type="submit" class="btn form-btn bg-purple">Submit Salary</button>
-    `,
-    payment: `
-      <h5 class="text-purple">Payment Form</h5>
-      <select id="paymentType" class="form-select mb-2">
-        <option value="loan">Loan</option>
-        <option value="credit">Credit</option>
-      </select>
-      <input type="number" step=".01" placeholder="Amount" name="paymentAmount" id="paymentAmount" class="form-control mb-2">
-      <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
-    `,
-    credit_usage: `
-      <h5 class="text-purple">Pay using Card</h5>
-      <input type="text" placeholder="Business" name="description" id="description" class="form-control mb-2">
-      <input type="number" step=".01" placeholder="Amount" name="creditAmount" id="creditAmount" class="form-control mb-2">
-      <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
-    `,
-  };
+  // const forms = {
+  //   transfer: `
+  //     <h5 class="text-purple">Transfer To Account</h5>
+  //     <select class="form-select mb-2" id="recieverAccount"></select>
+  //     <input type="number" step=".01" placeholder="Amount" name="transferAmount" id="transferAmount" class="form-control mb-2">
+  //     <button type="submit" class="btn form-btn bg-purple">Submit Transfer</button>
+  //   `,
+  //   salary: `
+  //     <h5 class="text-purple">Salary Form</h5>
+  //     <input type="text" placeholder="Employer Name" name="employerName" id="employerName" class="form-control mb-2">
+  //     <input type="number" step=".01" placeholder="Salary Amount" name="salaryAmount" id="salaryAmount" class="form-control mb-2">
+  //     <button type="submit" class="btn form-btn bg-purple">Submit Salary</button>
+  //   `,
+  //   payment: `
+  //     <h5 class="text-purple">Payment Form</h5>
+  //     <select id="paymentType" class="form-select mb-2">
+  //       <option value="loan">Loan</option>
+  //       <option value="credit">Credit</option>
+  //     </select>
+  //     <input type="number" step=".01" placeholder="Amount" name="paymentAmount" id="paymentAmount" class="form-control mb-2">
+  //     <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
+  //   `,
+  //   credit_usage: `
+  //     <h5 class="text-purple">Pay using Card</h5>
+  //     <input type="text" placeholder="Business" name="description" id="description" class="form-control mb-2">
+  //     <input type="number" step=".01" placeholder="Amount" name="creditAmount" id="creditAmount" class="form-control mb-2">
+  //     <button type="submit" class="btn form-btn bg-purple">Submit Payment</button>
+  //   `,
+  // };
 
-  document
-    .getElementById('transactionType')
-    .addEventListener('change', function () {
-      const selectedValue = this.value;
-      const transactionForm = document.getElementById('transactionForm');
-      const formContent = document.getElementById('formContent');
+  // document
+  //   .getElementById('transactionType')
+  //   .addEventListener('change', function () {
+  //     const selectedValue = this.value;
+  //     const transactionForm = document.getElementById('transactionForm');
+  //     const formContent = document.getElementById('formContent');
 
-      if (!selectedValue) {
-        transactionForm.classList.add('d-none');
-        formContent.innerHTML = '';
-        return;
-      }
-      transactionForm.classList.remove('d-none');
-      formContent.innerHTML = forms[selectedValue];
-    });
+  //     if (!selectedValue) {
+  //       transactionForm.classList.add('d-none');
+  //       formContent.innerHTML = '';
+  //       return;
+  //     }
+  //     transactionForm.classList.remove('d-none');
+  //     formContent.innerHTML = forms[selectedValue];
+  //   });
 
-  const makeTransaction = async (
-    type,
-    reciever = null,
-    amount,
-    details,
-    sender = null
-  ) => {
-    const newTransaction = {
-      transaction_type: type,
-      reciever_account: reciever,
-      amount: amount,
-      details: details,
-      sender_account: sender,
-    };
-    const access = localStorage.getItem('access_token');
-    const response = await axios.post(
-      `${PRODHOST}/transactions/`,
-      newTransaction,
-      {
-        headers: { Authorization: `Bearer ${access}` },
-      }
-    );
-    if (response.data.failure) {
-      alert(response.data.failure);
-      window.location.href = 'account.html';
-    }
-  };
+  // const makeTransaction = async (
+  //   type,
+  //   reciever = null,
+  //   amount,
+  //   details,
+  //   sender = null
+  // ) => {
+  //   const newTransaction = {
+  //     transaction_type: type,
+  //     reciever_account: reciever,
+  //     amount: amount,
+  //     details: details,
+  //     sender_account: sender,
+  //   };
+  //   const access = localStorage.getItem('access_token');
+  //   const response = await axios.post(
+  //     `${PRODHOST}/transactions/`,
+  //     newTransaction,
+  //     {
+  //       headers: { Authorization: `Bearer ${access}` },
+  //     }
+  //   );
+  //   if (response.data.failure) {
+  //     alert(response.data.failure);
+  //     window.location.href = 'account.html';
+  //   }
+  // };
 
-  document
-    .getElementById('transactionForm')
-    .addEventListener('submit', async function (event) {
-      event.preventDefault();
-      100;
-      const transactionType = document.getElementById('transactionType').value;
-      let details = '';
-      const data = await fetchAccount();
-      const account = data.account;
-      const user = data.user;
-      if (transactionType === 'transfer') {
-        const recipientAccountElement =
-          document.getElementById('recieverAccount');
-        const selectedOption =
-          recipientAccountElement.options[
-            recipientAccountElement.selectedIndex
-          ];
-        const recieverAccount = selectedOption.text;
-        const recieverId = selectedOption.value;
-        const amount = document.getElementById('transferAmount').value;
-        const transactionDetails = `${user.fname + ' ' + user.lname} - ${
-          account.account_num
-        } Transfered ${amount} to ${recieverAccount}`;
-        await makeTransaction(
-          transactionType,
-          recieverId,
-          amount,
-          transactionDetails,
-          account.id
-        );
-        details = `<p><strong>Transaction Type:</strong> Transfer</p>
-               <p><strong>Recipient Account:</strong> ${recieverAccount}</p>
-               <p><strong>Amount:</strong> ${amount}</p>`;
-      } else if (transactionType === 'salary') {
-        const employerName = document.getElementById('employerName').value;
-        const amount = document.getElementById('salaryAmount').value;
-        const transactionDetails = `salary from ${employerName} with a sum of ${amount}`;
-        await makeTransaction(
-          transactionType,
-          account.id,
-          amount,
-          transactionDetails
-        );
-        details = `<p><strong>Transaction Type:</strong> Salary</p>
-               <p><strong>Employer Name:</strong> ${employerName}</p>
-               <p><strong>Amount:</strong> ${amount}</p>`;
-      } else if (transactionType === 'credit_usage') {
-        const description = document.getElementById('description').value;
-        const amount = document.getElementById('creditAmount').value;
-        const transactionDetails = `Used card for ${description}, the price: ${amount}`;
-        details = `<p><strong>Transaction Type:</strong> Card Usage</p>
-        <p><strong>Description:</strong> ${description}</p>
-        <p><strong>Amount:</strong> ${amount}</p>`;
-        const use_card = async () => {
-          const newTransaction = {
-            amount: amount,
-            details: transactionDetails,
-          };
-          const access = localStorage.getItem('access_token');
-          const response = await axios.post(
-            `${PRODHOST}/cards/use_card/`,
-            newTransaction,
-            {
-              headers: { Authorization: `Bearer ${access}` },
-            }
-          );
-          if (response.data.failure) {
-            alert(response.data.failure);
-            window.location.reload();
-          }
-        };
-        await use_card();
-      } else if (transactionType === 'payment') {
-        let paymentType = document.getElementById('paymentType').value;
-        const amount = document.getElementById('paymentAmount').value;
-        if (paymentType == 'loan') {
-          let transactionDetails = `payed ${amount} for loan`;
-          await makeTransaction(
-            paymentType,
-            null,
-            amount,
-            transactionDetails,
-            account.id
-          );
-        } else {
-          paymentType = 'credit';
-          transactionDetails = `payed off ${amount} from credit card`;
-          await makeTransaction(
-            paymentType,
-            null,
-            amount,
-            transactionDetails,
-            account.id
-          );
-        }
-        details = `<p><strong>Transaction Type:</strong> Payment</p>
-               <p><strong>Type:</strong> ${paymentType}</p>
-               <p><strong>Amount:</strong> ${amount}</p>`;
-      }
+  // document
+  //   .getElementById('transactionForm')
+  //   .addEventListener('submit', async function (event) {
+  //     event.preventDefault();
+  //     100;
+  //     const transactionType = document.getElementById('transactionType').value;
+  //     let details = '';
+  //     const data = await fetchAccount();
+  //     const account = data.account;
+  //     const user = data.user;
+  //     if (transactionType === 'transfer') {
+  //       const recipientAccountElement =
+  //         document.getElementById('recieverAccount');
+  //       const selectedOption =
+  //         recipientAccountElement.options[
+  //           recipientAccountElement.selectedIndex
+  //         ];
+  //       const recieverAccount = selectedOption.text;
+  //       const recieverId = selectedOption.value;
+  //       const amount = document.getElementById('transferAmount').value;
+  //       const transactionDetails = `${user.fname + ' ' + user.lname} - ${
+  //         account.account_num
+  //       } Transfered ${amount} to ${recieverAccount}`;
+  //       await makeTransaction(
+  //         transactionType,
+  //         recieverId,
+  //         amount,
+  //         transactionDetails,
+  //         account.id
+  //       );
+  //       details = `<p><strong>Transaction Type:</strong> Transfer</p>
+  //              <p><strong>Recipient Account:</strong> ${recieverAccount}</p>
+  //              <p><strong>Amount:</strong> ${amount}</p>`;
+  //     } else if (transactionType === 'salary') {
+  //       const employerName = document.getElementById('employerName').value;
+  //       const amount = document.getElementById('salaryAmount').value;
+  //       const transactionDetails = `salary from ${employerName} with a sum of ${amount}`;
+  //       await makeTransaction(
+  //         transactionType,
+  //         account.id,
+  //         amount,
+  //         transactionDetails
+  //       );
+  //       details = `<p><strong>Transaction Type:</strong> Salary</p>
+  //              <p><strong>Employer Name:</strong> ${employerName}</p>
+  //              <p><strong>Amount:</strong> ${amount}</p>`;
+  //     } else if (transactionType === 'credit_usage') {
+  //       const description = document.getElementById('description').value;
+  //       const amount = document.getElementById('creditAmount').value;
+  //       const transactionDetails = `Used card for ${description}, the price: ${amount}`;
+  //       details = `<p><strong>Transaction Type:</strong> Card Usage</p>
+  //       <p><strong>Description:</strong> ${description}</p>
+  //       <p><strong>Amount:</strong> ${amount}</p>`;
+  //       const use_card = async () => {
+  //         const newTransaction = {
+  //           amount: amount,
+  //           details: transactionDetails,
+  //         };
+  //         const access = localStorage.getItem('access_token');
+  //         const response = await axios.post(
+  //           `${PRODHOST}/cards/use_card/`,
+  //           newTransaction,
+  //           {
+  //             headers: { Authorization: `Bearer ${access}` },
+  //           }
+  //         );
+  //         if (response.data.failure) {
+  //           alert(response.data.failure);
+  //           window.location.reload();
+  //         }
+  //       };
+  //       await use_card();
+  //     } else if (transactionType === 'payment') {
+  //       let paymentType = document.getElementById('paymentType').value;
+  //       const amount = document.getElementById('paymentAmount').value;
+  //       if (paymentType == 'loan') {
+  //         let transactionDetails = `payed ${amount} for loan`;
+  //         await makeTransaction(
+  //           paymentType,
+  //           null,
+  //           amount,
+  //           transactionDetails,
+  //           account.id
+  //         );
+  //       } else {
+  //         paymentType = 'credit';
+  //         transactionDetails = `payed off ${amount} from credit card`;
+  //         await makeTransaction(
+  //           paymentType,
+  //           null,
+  //           amount,
+  //           transactionDetails,
+  //           account.id
+  //         );
+  //       }
+  //       details = `<p><strong>Transaction Type:</strong> Payment</p>
+  //              <p><strong>Type:</strong> ${paymentType}</p>
+  //              <p><strong>Amount:</strong> ${amount}</p>`;
+  //     }
 
-      document.getElementById('modalContent').innerHTML = details;
-      const transactionModal = new bootstrap.Modal(
-        document.getElementById('transactionModal')
-      );
-      transactionModal.show();
-    });
+  //     document.getElementById('modalContent').innerHTML = details;
+  //     const transactionModal = new bootstrap.Modal(
+  //       document.getElementById('transactionModal')
+  //     );
+  //     transactionModal.show();
+  //   });
 </script>
