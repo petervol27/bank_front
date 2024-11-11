@@ -79,7 +79,8 @@
 }
 
 @media (max-width: 576px) {
-  #registerForm #loginForm {
+  #registerForm,
+  #loginForm {
     width: 75% !important;
   }
 }
