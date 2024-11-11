@@ -125,14 +125,6 @@
       headers: { Authorization: `Bearer ${access}` },
     });
     const data = response.data;
-    console.log('got here');
-    return data;
-  };
-  const fetchAccountDetails = async () => {
-    const access = localStorage.getItem('access_token');
-    const response = await axios.get(`${PRODHOST}/accounts/`, {
-      headers: { Authorization: `Bearer ${access}` },
-    });
     const account = response.data.account;
     const userName = response.data.user.fname + ' ' + response.data.user.lname;
     accountInfo.innerHTML = `
@@ -145,6 +137,7 @@
               ? 'class="text-success"'
               : "class='text-danger'"
           }>${account.balance}</span></h3>`;
+    return data;
   };
   const fetchTransactionOptions = async () => {
     const response = await axios.get(`${PRODHOST}/transactions/types/`);
@@ -189,7 +182,7 @@
     return accountsHTML;
   };
   const fetchData = async () => {
-    await fetchAccountDetails();
+    await fetchAccount();
     await fetchTransactionOptions();
     const accountOptionsHTML = await fetchAccounts();
     const transferForm = forms.transfer.replace(
