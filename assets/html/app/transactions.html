@@ -137,6 +137,7 @@
               ? 'class="text-success"'
               : "class='text-danger'"
           }>${account.balance}</span></h3>`;
+    return data;
   };
   const fetchTransactionOptions = async () => {
     const response = await axios.get(`${PRODHOST}/transactions/types/`);
