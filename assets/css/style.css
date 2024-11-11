@@ -77,3 +77,9 @@
 .branch-img {
   height: 250px;
 }
+
+@media (max-width: 576px) {
+  .forms {
+    width: 75%;
+  }
+}
