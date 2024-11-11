@@ -137,62 +137,60 @@
               ? 'class="text-success"'
               : "class='text-danger'"
           }>${account.balance}</span></h3>`;
-    return data;
   };
-  const fetchTransactionOptions = async () => {
-    const response = await axios.get(`${PRODHOST}/transactions/types/`);
-    const types = response.data;
-    let typeHTML = `<option value="">Select Transaction Type</option>`;
-    types.map((type) => {
-      if (
-        type[0] == 'withdraw' ||
-        type[0] == 'deposit' ||
-        type[0] == 'loan' ||
-        type[0] == 'credit'
-      ) {
-      } else {
-        let currentHTML = `<option value="${type[0]}">${type[1]}</option>`;
-        typeHTML += currentHTML;
-      }
-    });
-    transactionType.innerHTML = typeHTML;
-  };
-  const fetchAccounts = async () => {
-    const access = localStorage.getItem('access_token');
-    const accountResponse = await axios.get(`${PRODHOST}/accounts/all/`, {
-      headers: { Authorization: `Bearer ${access}` },
-    });
-    const userResponse = await axios.get(`${PRODHOST}/users/all/`, {
-      headers: { Authorization: `Bearer ${access}` },
-    });
-    const accounts = accountResponse.data;
-    const users = userResponse.data;
-    let accountsHTML = `<option value="">Choose Account</option>`;
-    const userMap = users.reduce((map, user) => {
-      map[user.id] = user;
-      return map;
-    }, {});
+  // const fetchTransactionOptions = async () => {
+  //   const response = await axios.get(`${PRODHOST}/transactions/types/`);
+  //   const types = response.data;
+  //   let typeHTML = `<option value="">Select Transaction Type</option>`;
+  //   types.map((type) => {
+  //     if (
+  //       type[0] == 'withdraw' ||
+  //       type[0] == 'deposit' ||
+  //       type[0] == 'loan' ||
+  //       type[0] == 'credit'
+  //     ) {
+  //     } else {
+  //       let currentHTML = `<option value="${type[0]}">${type[1]}</option>`;
+  //       typeHTML += currentHTML;
+  //     }
+  //   });
+  //   transactionType.innerHTML = typeHTML;
+  // };
+  // const fetchAccounts = async () => {
+  //   const access = localStorage.getItem('access_token');
+  //   const accountResponse = await axios.get(`${PRODHOST}/accounts/all/`, {
+  //     headers: { Authorization: `Bearer ${access}` },
+  //   });
+  //   const userResponse = await axios.get(`${PRODHOST}/users/all/`, {
+  //     headers: { Authorization: `Bearer ${access}` },
+  //   });
+  //   const accounts = accountResponse.data;
+  //   const users = userResponse.data;
+  //   let accountsHTML = `<option value="">Choose Account</option>`;
+  //   const userMap = users.reduce((map, user) => {
+  //     map[user.id] = user;
+  //     return map;
+  //   }, {});
 
-    accounts.forEach((account) => {
-      const user = userMap[account.user];
-      if (user) {
-        accountsHTML += `<option value="${account.id}">${user.first_name} ${user.last_name} - ${account.account_num}</option>`;
-      }
-    });
-    return accountsHTML;
-  };
-  const fetchData = async () => {
-    await fetchAccount();
-    await fetchTransactionOptions();
-    const accountOptionsHTML = await fetchAccounts();
-    // const transferForm = forms.transfer.replace(
-    //   '<select class="form-select mb-2" id="recieverAccount"></select>',
-    //   `<select class="form-select mb-2" id="recieverAccount">${accountOptionsHTML}</select>`
-    // );
-    // forms.transfer = transferForm;
-  };
+  //   accounts.forEach((account) => {
+  //     const user = userMap[account.user];
+  //     if (user) {
+  //       accountsHTML += `<option value="${account.id}">${user.first_name} ${user.last_name} - ${account.account_num}</option>`;
+  //     }
+  //   });
+  //   return accountsHTML;
+  // };
+  // const fetchData = async () => {
+  //   await fetchAccount();
+  //   await fetchTransactionOptions();
+  //   const accountOptionsHTML = await fetchAccounts();
+  //   // const transferForm = forms.transfer.replace(
+  //   //   '<select class="form-select mb-2" id="recieverAccount"></select>',
+  //   //   `<select class="form-select mb-2" id="recieverAccount">${accountOptionsHTML}</select>`
+  //   // );
+  //   // forms.transfer = transferForm;
+  // };
   addEventListener('DOMcontentloaded', async () => {
-    // await fetchData();
     await fetchAccount();
   });
   // const forms = {
