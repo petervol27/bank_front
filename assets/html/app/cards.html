@@ -100,7 +100,6 @@
       headers: { Authorization: `Bearer ${access}` },
     });
     const card = response.data;
-    console.log(card);
     if (card == 0) {
       cardList.innerHTML = `<h1 class="text-purple text-center">No Cards available</h1>`;
       return;

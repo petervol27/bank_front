@@ -117,7 +117,7 @@
     </footer>
   </body>
 </html>
-<script>
+<script defer>
   const accountInfo = document.getElementById('accountInfo');
   const fetchAccount = async () => {
     const access = localStorage.getItem('access_token');
@@ -191,14 +191,9 @@
     );
     forms.transfer = transferForm;
   };
-  // addEventListener('DOMcontentloaded', async () => {
-  //   await fetchData();
-  // });
-  window.onload = async () => {
-    logoutBtn.addEventListener('click', logout);
-    await checkLogin();
+  addEventListener('DOMcontentloaded', async () => {
     await fetchData();
-  };
+  });
   const forms = {
     transfer: `
       <h5 class="text-purple">Transfer To Account</h5>
