@@ -79,7 +79,7 @@
 }
 
 @media (max-width: 576px) {
-  .forms {
+  #registerForm {
     width: 75%;
   }
 }
