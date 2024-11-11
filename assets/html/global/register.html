@@ -234,6 +234,7 @@
       console.log(createAccount.data);
       window.location.href = '../app/account.html';
     } catch (error) {
+      console.log(error);
       errortxt.innerHTML = 'Something went wrong please check Credentials!';
     }
   };
