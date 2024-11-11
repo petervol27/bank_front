@@ -160,7 +160,7 @@
               aria-expanded="false"
               aria-controls="collapseRow${transaction.id}"
             ><td class="fw-bold">${transaction.formatted_date}</td>
-              <td>${transaction.transaction_type}</td>
+              <td>${capitalize(transaction.transaction_type)}</td>
            ${
              transaction.reciever_account == account.id
                ? `<td class="text-danger"></td><td class="text-success">${transaction.amount}</td><td class="fw-bold">${transaction.reciever_new_balance}</td>`
