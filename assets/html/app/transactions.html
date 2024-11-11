@@ -118,26 +118,26 @@
   </body>
 </html>
 <script>
-  const accountInfo = document.getElementById('accountInfo');
-  const fetchAccount = async () => {
-    const access = localStorage.getItem('access_token');
-    const response = await axios.get(`${PRODHOST}/accounts/`, {
-      headers: { Authorization: `Bearer ${access}` },
-    });
-    const data = response.data;
-    const account = response.data.account;
-    const userName = response.data.user.fname + ' ' + response.data.user.lname;
-    accountInfo.innerHTML = `
-            <h3 class="text-purple">Hello, <strong >${userName}</strong></h3>
-            <h4>Account: <span class="text-purple">${
-              account.account_num
-            }</span></h4>
-          <h3>Balance: <span ${
-            account.balance >= 0
-              ? 'class="text-success"'
-              : "class='text-danger'"
-          }>${account.balance}</span></h3>`;
-  };
+  // const accountInfo = document.getElementById('accountInfo');
+  // const fetchAccount = async () => {
+  //   const access = localStorage.getItem('access_token');
+  //   const response = await axios.get(`${PRODHOST}/accounts/`, {
+  //     headers: { Authorization: `Bearer ${access}` },
+  //   });
+  //   const data = response.data;
+  //   const account = response.data.account;
+  //   const userName = response.data.user.fname + ' ' + response.data.user.lname;
+  //   accountInfo.innerHTML = `
+  //           <h3 class="text-purple">Hello, <strong >${userName}</strong></h3>
+  //           <h4>Account: <span class="text-purple">${
+  //             account.account_num
+  //           }</span></h4>
+  //         <h3>Balance: <span ${
+  //           account.balance >= 0
+  //             ? 'class="text-success"'
+  //             : "class='text-danger'"
+  //         }>${account.balance}</span></h3>`;
+  // };
   // const fetchTransactionOptions = async () => {
   //   const response = await axios.get(`${PRODHOST}/transactions/types/`);
   //   const types = response.data;
@@ -191,7 +191,8 @@
   //   // forms.transfer = transferForm;
   // };
   addEventListener('DOMcontentloaded', async () => {
-    await fetchAccount();
+    console.log('nigga');
+    // await fetchAccount();
   });
   // const forms = {
   //   transfer: `
