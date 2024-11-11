@@ -191,9 +191,14 @@
     );
     forms.transfer = transferForm;
   };
-  addEventListener('DOMcontentloaded', async (event) => {
+  // addEventListener('DOMcontentloaded', async () => {
+  //   await fetchData();
+  // });
+  window.onload = async () => {
+    logoutBtn.addEventListener('click', logout);
+    await checkLogin();
     await fetchData();
-  });
+  };
   const forms = {
     transfer: `
       <h5 class="text-purple">Transfer To Account</h5>
