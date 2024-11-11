@@ -176,7 +176,9 @@
     accounts.forEach((account) => {
       const user = userMap[account.user];
       if (user) {
-        accountsHTML += `<option value="${account.id}">${user.first_name} ${user.last_name} - ${account.account_num}</option>`;
+        accountsHTML += `<option value="${account.id}">${capitalize(
+          user.first_name
+        )} ${capitalize(user.last_name)} - ${account.account_num}</option>`;
       }
     });
     return accountsHTML;
@@ -302,9 +304,11 @@
                <p><strong>Recipient Account:</strong> ${recieverAccount}</p>
                <p><strong>Amount:</strong> ${amount}</p>`;
       } else if (transactionType === 'salary') {
-        const employerName = document.getElementById('employerName').value;
+        const employerName = capitalize(
+          document.getElementById('employerName').value
+        );
         const amount = document.getElementById('salaryAmount').value;
-        const transactionDetails = `salary from ${employerName} with a sum of ${amount}`;
+        const transactionDetails = `Salary from ${employerName} with a sum of ${amount}`;
         await makeTransaction(
           transactionType,
           account.id,
@@ -315,7 +319,9 @@
                <p><strong>Employer Name:</strong> ${employerName}</p>
                <p><strong>Amount:</strong> ${amount}</p>`;
       } else if (transactionType === 'credit_usage') {
-        const description = document.getElementById('description').value;
+        const description = capitalize(
+          document.getElementById('description').value
+        );
         const amount = document.getElementById('creditAmount').value;
         const transactionDetails = `Used card for ${description}, the price: ${amount}`;
         details = `<p><strong>Transaction Type:</strong> Card Usage</p>
@@ -344,7 +350,7 @@
         let paymentType = document.getElementById('paymentType').value;
         const amount = document.getElementById('paymentAmount').value;
         if (paymentType == 'loan') {
-          let transactionDetails = `payed ${amount} for loan`;
+          let transactionDetails = `Payed ${amount} for Loan`;
           await makeTransaction(
             paymentType,
             null,
@@ -354,7 +360,7 @@
           );
         } else {
           paymentType = 'credit';
-          transactionDetails = `payed off ${amount} from credit card`;
+          transactionDetails = `Payed off ${amount} from Credit Card`;
           await makeTransaction(
             paymentType,
             null,

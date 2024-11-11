@@ -63,6 +63,7 @@
             name="username"
             class="form-control"
             type="text"
+            required
           />
         </div>
         <div>
@@ -72,23 +73,49 @@
             name="password"
             class="form-control"
             type="password"
+            required
           />
         </div>
         <div>
           <label class="form-label" for="email">Email:</label
-          ><input id="email" name="email" class="form-control" type="email" />
+          ><input
+            id="email"
+            name="email"
+            class="form-control"
+            type="email"
+            required
+          />
         </div>
         <div>
           <label class="form-label" for="fname">First Name:</label
-          ><input id="fname" name="fname" class="form-control" type="text" />
+          ><input
+            id="fname"
+            name="fname"
+            class="form-control"
+            type="text"
+            required
+          />
         </div>
         <div>
           <label class="form-label" for="lname">Last Name:</label
-          ><input id="lname" name="lname" class="form-control" type="text" />
+          ><input
+            id="lname"
+            name="lname"
+            class="form-control"
+            type="text"
+            required
+          />
         </div>
         <div>
           <label class="form-label" for="phone">Phone:</label
-          ><input id="phone" name="phone" class="form-control" type="number" />
+          ><input
+            id="phone"
+            name="phone"
+            class="form-control"
+            type="number"
+            required
+            maxlength="12"
+          />
         </div>
         <div>
           <label class="form-label" for="address">Address:</label
@@ -97,6 +124,7 @@
             name="address"
             class="form-control"
             type="text"
+            required
           />
         </div>
         <div>
@@ -106,6 +134,8 @@
             name="citizen_num"
             class="form-control"
             type="number"
+            required
+            maxlength="9"
           />
         </div>
 
@@ -157,7 +187,7 @@
     const address = formData.get('address');
     const citizenNum = formData.get('citizen_num');
     const email = formData.get('email');
-    const regData = {
+    const registerData = {
       username: username,
       password: password,
       phone: phone,
@@ -167,7 +197,7 @@
       citizen_num: citizenNum,
       email: email,
     };
-    const formValidationEmpty = Object.values(regData).every(
+    const formValidationEmpty = Object.values(registerData).every(
       (value) => value && value.trim() !== ''
     );
     if (!formValidationEmpty) {
@@ -177,7 +207,7 @@
     try {
       const response = await axios.post(
         'https://bank-zdpd.onrender.com/users/register/',
-        regData
+        registerData
       );
       alert('Thank you for joining us, we are creating your account now!');
 
