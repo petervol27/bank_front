@@ -23,8 +23,10 @@ const validateToken = async (token) => {
     const response = await axios.get(`${PRODHOST}/users/validate/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
-    if (response.data.valid && response.data.check_admin == true) {
+    if (response.data.check_admin == false) {
+      window.location.href = '../../../index.html';
+    }
+    if (response.data.valid) {
       return;
     }
   } catch (error) {
