@@ -116,7 +116,7 @@
     const password = formData.get('password');
     try {
       const response = await axios.post(
-        'https://bank-zdpd.onrender.com/login/',
+        'https://bank-zdpd.onrender.com/users/login/',
         {
           username: username,
           password: password,
@@ -126,8 +126,9 @@
       const refresh = response.data.refresh;
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
-      alert('You are being redirected to your account');
-      window.location.href = '../app/account.html';
+      console.log(response.data);
+      // alert('You are being redirected to your account');
+      // window.location.href = '../app/account.html';
     } catch (error) {
       errortxt.innerHTML = 'Wrong Credentials';
     }
