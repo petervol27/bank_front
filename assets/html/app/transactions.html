@@ -187,11 +187,15 @@
     await fetchAccount();
     await fetchTransactionOptions();
     const accountOptionsHTML = await fetchAccounts();
-    const transferForm = forms.transfer.replace(
-      '<select class="form-select mb-2" id="recieverAccount"></select>',
-      `<select class="form-select mb-2" id="recieverAccount">${accountOptionsHTML}</select>`
-    );
-    forms.transfer = transferForm;
+    // const transferForm = forms.transfer.replace(
+    //   '<select class="form-select mb-2" id="recieverAccount"></select>',
+    //   `<select class="form-select mb-2" id="recieverAccount">${accountOptionsHTML}</select>`
+    // );
+    // forms.transfer = transferForm;
+    const recieverAccountSelect = document.getElementById('recieverAccount');
+    if (recieverAccountSelect) {
+      recieverAccountSelect.innerHTML = accountOptionsHTML;
+    }
   };
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchData();
