@@ -124,11 +124,16 @@
       );
       const access = response.data.access;
       const refresh = response.data.refresh;
+      const checkAdmin = response.data.is_staff;
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
-      console.log(response.data);
-      // alert('You are being redirected to your account');
-      // window.location.href = '../app/account.html';
+      if (checkAdmin) {
+        alert('Hello Admin');
+        window.location.href = '../admin/dashboard.html';
+      } else {
+        alert('You are being redirected to your account');
+        window.location.href = '../app/account.html';
+      }
     } catch (error) {
       errortxt.innerHTML = 'Wrong Credentials';
     }
