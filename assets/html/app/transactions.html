@@ -185,13 +185,8 @@
   };
   const fetchData = async () => {
     await fetchAccount();
-    await fetchTransactionOptions();
     const accountOptionsHTML = await fetchAccounts();
-    // const transferForm = forms.transfer.replace(
-    //   '<select class="form-select mb-2" id="recieverAccount"></select>',
-    //   `<select class="form-select mb-2" id="recieverAccount">${accountOptionsHTML}</select>`
-    // );
-    // forms.transfer = transferForm;
+    await fetchTransactionOptions();
     const recieverAccountSelect = document.getElementById('recieverAccount');
     if (recieverAccountSelect) {
       recieverAccountSelect.innerHTML = accountOptionsHTML;
