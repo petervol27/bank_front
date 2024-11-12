@@ -19,37 +19,257 @@
     <script src="../../js/admin.js" defer></script>
     <title>Admin Dashboard</title>
   </head>
-  <header>
-    <nav class="navbar navbar-expand-sm bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"
-          ><h3 class="text-purple">Dashboard</h3></a
-        >
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link text-purple" href="#">Users</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-purple" href="#">Accounts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-purple" href="#">Loans</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-purple" href="#">Cards</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link bg-purple login-txt" id="logoutBtn" href="#"
-              >Logout</a
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand text-purple" href="./dashboard.html"
+            ><h3 class="text-purple">Dashboard</h3></a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="btn bg-purple login-txt" id="logoutBtn" href="#"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="container mt-4">
+      <h1 class="text-center text-purple">Dashboard</h1>
+
+      <div class="accordion" id="dashboardAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingUsers">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseUsers"
+              aria-expanded="true"
+              aria-controls="collapseUsers"
             >
-          </li>
-        </ul>
+              Users
+            </button>
+          </h2>
+          <div
+            id="collapseUsers"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingUsers"
+            data-bs-parent="#dashboardAccordion"
+          >
+            <div class="accordion-body">
+              <ul class="list-group">
+                <li class="list-group-item">User 1</li>
+                <li class="list-group-item">User 2</li>
+                <li class="list-group-item">User 3</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingAccounts">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseAccounts"
+              aria-expanded="false"
+              aria-controls="collapseAccounts"
+            >
+              Accounts
+            </button>
+          </h2>
+          <div
+            id="collapseAccounts"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingAccounts"
+            data-bs-parent="#dashboardAccordion"
+          >
+            <div class="accordion-body">
+              <ul class="list-group">
+                <li class="list-group-item">Account 1</li>
+                <li class="list-group-item">Account 2</li>
+                <li class="list-group-item">Account 3</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingLoans">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseLoans"
+              aria-expanded="false"
+              aria-controls="collapseLoans"
+            >
+              Loans
+            </button>
+          </h2>
+          <div
+            id="collapseLoans"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingLoans"
+            data-bs-parent="#dashboardAccordion"
+          >
+            <div class="accordion-body">
+              <ul class="list-group">
+                <li class="list-group-item">Loan 1</li>
+                <li class="list-group-item">Loan 2</li>
+                <li class="list-group-item">Loan 3</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingCards">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseCards"
+              aria-expanded="false"
+              aria-controls="collapseCards"
+            >
+              Cards
+            </button>
+          </h2>
+          <div
+            id="collapseCards"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingCards"
+            data-bs-parent="#dashboardAccordion"
+          >
+            <div class="accordion-body">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  Card 1
+
+                  <div class="accordion mt-2" id="card1TransactionsAccordion">
+                    <div class="accordion-item">
+                      <h2
+                        class="accordion-header"
+                        id="headingCard1Transactions"
+                      >
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseCard1Transactions"
+                          aria-expanded="false"
+                          aria-controls="collapseCard1Transactions"
+                        >
+                          Credit Transactions
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseCard1Transactions"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingCard1Transactions"
+                        data-bs-parent="#card1TransactionsAccordion"
+                      >
+                        <div class="accordion-body">
+                          <ul class="list-group">
+                            <li class="list-group-item">Transaction 1</li>
+                            <li class="list-group-item">Transaction 2</li>
+                            <li class="list-group-item">Transaction 3</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  Card 2
+
+                  <div class="accordion mt-2" id="card2TransactionsAccordion">
+                    <div class="accordion-item">
+                      <h2
+                        class="accordion-header"
+                        id="headingCard2Transactions"
+                      >
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseCard2Transactions"
+                          aria-expanded="false"
+                          aria-controls="collapseCard2Transactions"
+                        >
+                          Credit Transactions
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseCard2Transactions"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingCard2Transactions"
+                        data-bs-parent="#card2TransactionsAccordion"
+                      >
+                        <div class="accordion-body">
+                          <ul class="list-group">
+                            <li class="list-group-item">Transaction A</li>
+                            <li class="list-group-item">Transaction B</li>
+                            <li class="list-group-item">Transaction C</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTransactions">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseTransactions"
+              aria-expanded="false"
+              aria-controls="collapseTransactions"
+            >
+              Transactions
+            </button>
+          </h2>
+          <div
+            id="collapseTransactions"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingTransactions"
+            data-bs-parent="#dashboardAccordion"
+          >
+            <div class="accordion-body">
+              <ul class="list-group">
+                <li class="list-group-item">Transaction 1 - $100</li>
+                <li class="list-group-item">Transaction 2 - $200</li>
+                <li class="list-group-item">Transaction 3 - $300</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-    </nav>
-  </header>
-  <main>
-    <ul>
-      <h1>DashBoard</h1>
-    </ul>
-  </main>
+    </main>
+  </body>
 </html>
