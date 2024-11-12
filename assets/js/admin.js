@@ -24,7 +24,7 @@ const validateToken = async (token) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (response.data.valid && response.data.check_admin) {
+    if (response.data.valid && response.data.check_admin == true) {
       return;
     }
   } catch (error) {
