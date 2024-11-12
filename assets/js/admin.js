@@ -23,7 +23,7 @@ const validateToken = async (token) => {
     const response = await axios.get(`${PRODHOST}/users/validate/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response.data);
+
     if (response.data.valid && response.data.check_admin) {
       return;
     }
