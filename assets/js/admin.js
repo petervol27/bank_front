@@ -23,7 +23,7 @@ const validateToken = async (token) => {
     const response = await axios.get(`${PRODHOST}/users/validate/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (response.data.valid) {
+    if (response.data.valid && response.data.check_admin) {
       return;
     }
   } catch (error) {
@@ -32,13 +32,8 @@ const validateToken = async (token) => {
   }
 };
 
-const checkAdmin = async () => {
-  console.log('checking admin');
-};
-
 const checkLogin = async () => {
   const access = localStorage.getItem('access_token');
-  await checkAdmin();
   try {
     if (!access) {
       throw new Error('no access token');
