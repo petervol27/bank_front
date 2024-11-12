@@ -185,12 +185,12 @@
   };
   const fetchData = async () => {
     await fetchAccount();
+    await fetchTransactionOptions();
     const accountOptionsHTML = await fetchAccounts();
     const recieverAccountSelect = document.getElementById('recieverAccount');
     if (recieverAccountSelect) {
       recieverAccountSelect.innerHTML = accountOptionsHTML;
     }
-    await fetchTransactionOptions();
   };
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchData();
