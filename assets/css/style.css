@@ -78,9 +78,23 @@
   height: 250px;
 }
 
+.nav-link:hover,
+.nav-link:active,
+.navbar-nav .nav-link.active {
+  color: #94d82d;
+}
+
 @media (max-width: 576px) {
   #registerForm,
   #loginForm {
     width: 75% !important;
+  }
+  .hero {
+    margin: 0;
+    padding: 100px;
+  }
+  .hero div {
+    top: 76px !important;
+    left: -28px !important;
   }
 }

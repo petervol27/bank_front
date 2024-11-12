@@ -74,11 +74,11 @@
             data-bs-parent="#dashboardAccordion"
           >
             <div class="accordion-body">
-              <ul class="list-group">
-                <li class="list-group-item">User 1</li>
+              <div id="userList">
+                <!-- <li class="list-group-item">User 1</li>
                 <li class="list-group-item">User 2</li>
-                <li class="list-group-item">User 3</li>
-              </ul>
+                <li class="list-group-item">User 3</li> -->
+              </div>
             </div>
           </div>
         </div>
@@ -273,3 +273,33 @@
     </main>
   </body>
 </html>
+<script>
+  const userList = document.getElementById('userList');
+  const fetchData = async () => {
+    const access = localStorage.getItem('access_token');
+    const response = await axios.get(`${PRODHOST}/manager/`, {
+      headers: { Authorization: `Bearer ${access}` },
+    });
+    console.log(response.data);
+    const users = response.data.users;
+    let usersHTML = ``;
+    users.map((user) => {
+      let userHTML = ` <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>ID:</strong> ${user.id}</li>
+        <li class="list-group-item"><strong>Username:</strong> ${user.username}</li>
+        <li class="list-group-item"><strong>First Name:</strong> ${user.first_name}</li>
+        <li class="list-group-item"><strong>Last Name:</strong> ${user.last_name}</li>
+        <li class="list-group-item"><strong>Email:</strong> ${user.email}</li>
+        <li class="list-group-item"><strong>Phone:</strong> ${user.phone}</li>
+        <li class="list-group-item"><strong>Citizen Number:</strong> ${user.citizen_num}</li>
+        <li class="list-group-item"><strong>Address:</strong> ${user.address}</li>
+        <li class="list-group-item"><strong>Joined:</strong> ${user.date_joined}</li>
+      </ul>`;
+      usersHTML += userHTML;
+    });
+    userList.innerHTML = usersHTML;
+  };
+  addEventListener('DOMContentLoaded', async (event) => {
+    await fetchData();
+  });
+</script>
