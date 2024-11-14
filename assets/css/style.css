@@ -103,8 +103,9 @@
     padding: 100px;
   }
   .hero div {
-    top: 85px !important;
-    left: -5px !important;
+    top: 50% !important;
+    left: -40px !important;
+    /* right: 50% !important; */
   }
   .contact-details {
     width: 100% !important;
