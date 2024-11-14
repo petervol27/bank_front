@@ -26,24 +26,42 @@
           <a class="navbar-brand" href="./account.html"
             ><h3 class="text-purple">Neo Banking</h3></a
           >
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link text-purple" href="./account.html">Overview</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-purple active" href="./loans.html"
-                >My Loans</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-purple" href="./cards.html">My Cards</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link bg-purple login-txt" id="logoutBtn" href="#"
-                >Logout</a
-              >
-            </li>
-          </ul>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link text-purple" href="./account.html"
+                  >Overview</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-purple active" href="./loans.html"
+                  >My Loans</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-purple" href="./cards.html">My Cards</a>
+              </li>
+              <li class="nav-item mt-2">
+                <a
+                  class="nav-link bg-purple login-txt d-inline px-5 py-2"
+                  id="logoutBtn"
+                  href="#"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </header>
