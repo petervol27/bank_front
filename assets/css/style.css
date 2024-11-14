@@ -87,8 +87,11 @@
 }
 
 @media (max-width: 576px) {
-  html {
+  main {
     max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0 auto;
+    padding: 1rem;
   }
 
   #registerForm,
