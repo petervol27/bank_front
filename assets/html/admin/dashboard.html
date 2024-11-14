@@ -184,30 +184,176 @@
 </html>
 <script>
   const userList = document.getElementById('userList');
+  const cardsList = document.getElementById('cardsList');
+  const accountsList = document.getElementById('accountsList');
+  const loansList = document.getElementById('loansList');
+  const transactionsList = document.getElementById('transactionsList');
   const fetchData = async () => {
     const access = localStorage.getItem('access_token');
     const response = await axios.get(`${PRODHOST}/manager/`, {
       headers: { Authorization: `Bearer ${access}` },
     });
-    console.log(response.data);
+
     const users = response.data.users;
     let usersHTML = ``;
     users.map((user) => {
       let userHTML = ` <ul class="list-group mb-3">
-        <li class="list-group-item"><strong>ID:</strong> ${user.id}</li>
-        <li class="list-group-item"><strong>Username:</strong> ${user.username}</li>
-        <li class="list-group-item"><strong>First Name:</strong> ${user.first_name}</li>
-        <li class="list-group-item"><strong>Last Name:</strong> ${user.last_name}</li>
-        <li class="list-group-item"><strong>Email:</strong> ${user.email}</li>
-        <li class="list-group-item"><strong>Phone:</strong> ${user.phone}</li>
-        <li class="list-group-item"><strong>Citizen Number:</strong> ${user.citizen_num}</li>
-        <li class="list-group-item"><strong>Address:</strong> ${user.address}</li>
-        <li class="list-group-item"><strong>Joined:</strong> ${user.date_joined}</li>
-      </ul>`;
+          <li class="list-group-item"><strong>ID:</strong> ${user.id}</li>
+          <li class="list-group-item"><strong>Username:</strong> ${user.username}</li>
+          <li class="list-group-item"><strong>First Name:</strong> ${user.first_name}</li>
+          <li class="list-group-item"><strong>Last Name:</strong> ${user.last_name}</li>
+          <li class="list-group-item"><strong>Email:</strong> ${user.email}</li>
+          <li class="list-group-item"><strong>Phone:</strong> ${user.phone}</li>
+          <li class="list-group-item"><strong>Citizen Number:</strong> ${user.citizen_num}</li>
+          <li class="list-group-item"><strong>Address:</strong> ${user.address}</li>
+          <li class="list-group-item"><strong>Joined:</strong> ${user.date_joined}</li>
+        </ul>`;
       usersHTML += userHTML;
     });
     userList.innerHTML = usersHTML;
+
+    const cards = response.data.cards;
+    const creditTransactions = response.data.credit_transactions;
+    const accounts = response.data.accounts;
+    let cardsHTML = '';
+    const accountsById = {};
+    accounts.forEach((account) => {
+      accountsById[account.id] = account.account_num;
+    });
+    const transactionsByCard = {};
+    creditTransactions.forEach((transaction) => {
+      if (!transactionsByCard[transaction.card]) {
+        transactionsByCard[transaction.card] = [];
+      }
+      transactionsByCard[transaction.card].push(transaction);
+    });
+
+    cards.forEach((card) => {
+      const accountNumber = accountsById[card.account] || 'N/A';
+      let cardHTML = `
+      <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>Card ID:</strong> ${card.id}</li>
+        <li class="list-group-item"><strong>Card Number:</strong> ${card.card_number}</li>
+        <li class="list-group-item"><strong>Expiration Date:</strong> ${card.expiration_date}</li>
+        <li class="list-group-item"><strong>CVV:</strong> ${card.cvv}</li>
+        <li class="list-group-item"><strong>Manufacturer:</strong> ${card.manufacturer}</li>
+        <li class="list-group-item"><strong>Current Credit Used:</strong> ${card.current_credit_used}</li>
+        <li class="list-group-item"><strong>Credit Limit:</strong> ${card.credit_limit}</li>
+        <li class="list-group-item"><strong>Owner Name:</strong> ${card.owner_name}</li>
+        <li class="list-group-item"><strong>Account Number:</strong> ${accountNumber}</li>
+      </ul>
+    `;
+
+      const cardTransactions = transactionsByCard[card.id] || [];
+      if (cardTransactions.length > 0) {
+        cardHTML += `
+        <ul class="list-group mb-3">
+          <li class="list-group-item active"><strong>Credit Transactions:</strong></li>
+      `;
+
+        cardTransactions.forEach((transaction) => {
+          cardHTML += `
+          <li class="list-group-item">
+            <strong>Transaction ID:</strong> ${transaction.id}<br>
+            <strong>Amount:</strong> ${transaction.amount}<br>
+            <strong>Date:</strong> ${transaction.formatted_date}<br>
+            <strong>Details:</strong> ${transaction.details}
+          </li>
+        `;
+        });
+
+        cardHTML += `</ul>`;
+      } else {
+        cardHTML += `<li class="list-group-item">No credit transactions available for this card.</li>`;
+      }
+
+      cardsHTML += cardHTML;
+    });
+
+    cardsList.innerHTML = cardsHTML;
+
+    let accountsHTML = '';
+
+    const usersById = {};
+    users.forEach((user) => {
+      usersById[user.id] = `${user.first_name} ${user.last_name}`;
+    });
+
+    accounts.forEach((account) => {
+      const accountOwner = usersById[account.user] || 'Unknown User';
+      const statusText = account.status ? 'Active' : 'Deactivated';
+
+      let accountHTML = `
+      <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>Account Id:</strong> ${account.id}</li>
+        <li class="list-group-item"><strong>Account Number:</strong> ${account.account_num}</li>
+        <li class="list-group-item"><strong>Branch:</strong> ${account.branch}</li>
+        <li class="list-group-item"><strong>Balance:</strong> ${account.balance}</li>
+        <li class="list-group-item"><strong>Status:</strong> ${statusText}</li>
+        <li class="list-group-item"><strong>Owner:</strong> ${accountOwner}</li>
+        <li class="list-group-item"><strong>Account ID:</strong> ${account.id}</li>
+      </ul>
+    `;
+
+      accountsHTML += accountHTML;
+    });
+
+    accountsList.innerHTML = accountsHTML;
+
+    const loans = response.data.loans;
+    let loansHTML = '';
+    loans.forEach((loan) => {
+      const accountNumber = accountsById[loan.account] || 'Unknown Account';
+
+      let loanHTML = `
+      <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>ID:</strong> ${loan.id}</li>
+        <li class="list-group-item"><strong>Loan Number:</strong> ${
+          loan.loan_number
+        }</li>
+        <li class="list-group-item"><strong>Amount:</strong> ${loan.amount}</li>
+        <li class="list-group-item"><strong>Date Taken:</strong> ${
+          loan.date_taken
+        }</li>
+        <li class="list-group-item"><strong>Date Finished:</strong> ${
+          loan.date_finished || 'Ongoing'
+        }</li>
+        <li class="list-group-item"><strong>Left to Pay:</strong> ${
+          loan.left_to_pay
+        }</li>
+        <li class="list-group-item"><strong>Payments:</strong> ${loan.payments}
+        </li>
+        <li class="list-group-item"><strong>Account Number:</strong> ${accountNumber}</li>
+      </ul>
+    `;
+
+      loansHTML += loanHTML;
+    });
+
+    loansList.innerHTML = loansHTML;
+
+    const transactions = response.data.transactions;
+    let transactionsHTML = '';
+
+    transactions.forEach((transaction) => {
+      let receiverAccount = accountsById[transaction.reciever_account] || 'N/A';
+      let senderAccount = accountsById[transaction.sender_account] || 'N/A';
+      let transactionHTML = `
+    <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>ID:</strong> ${transaction.id}</li>
+        <li class="list-group-item"><strong>Date:</strong> ${transaction.formatted_date}</li>
+        <li class="list-group-item"><strong>Details:</strong> ${transaction.details}</li>
+        <li class="list-group-item"><strong>Type:</strong> ${transaction.transaction_type}</li>
+        <li class="list-group-item"><strong>Receiver Account:</strong> ${receiverAccount}</li>
+        <li class="list-group-item"><strong>Sender Account:</strong> ${senderAccount}</li>
+      </ul>
+    `;
+      transactionsHTML += transactionHTML;
+    });
+
+    transactionsList.innerHTML = transactionsHTML;
   };
+
   addEventListener('DOMContentLoaded', async (event) => {
     await fetchData();
   });
