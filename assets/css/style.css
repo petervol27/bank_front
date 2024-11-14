@@ -110,4 +110,8 @@
   .contact-details {
     width: 100% !important;
   }
+  .user-info h1 {
+    display: flex !important;
+    flex-direction: column !important;
+  }
 }
