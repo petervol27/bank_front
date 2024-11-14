@@ -63,44 +63,44 @@
         </div>
       </nav>
     </header>
-    <main>
+    <main class="main-accounts">
       <div
         class="ms-3 mt-3 text-purple d-flex justify-content-between align-items-center user-info"
         id="accountHeading"
       ></div>
       <div class="my-3 bg-light text-center p-3" id="accountInfo"></div>
-      <div class="accordion container" id="tableAccordion">
-        <form
-          class="container d-flex justify-content-center align-items-center gap-2 mb-3"
-          id="withdrawDepositForm"
-        >
-          <input
-            type="number"
-            class="form-control w-25"
-            placeholder="Enter Amount Here"
-            id="amountInput"
-            required
-          />
+      <form
+        class="container d-flex justify-content-center align-items-center gap-2 mb-3"
+        id="withdrawDepositForm"
+      >
+        <input
+          type="number"
+          class="form-control w-25"
+          placeholder="Enter Amount Here"
+          id="amountInput"
+          required
+        />
 
-          <button
-            class="btn btn-danger"
-            type="submit"
-            name="action"
-            value="withdraw"
-          >
-            Withdraw
-          </button>
-          <button
-            class="btn btn-primary"
-            type="submit"
-            name="action"
-            value="deposit"
-          >
-            Deposit
-          </button>
-        </form>
-        <div class="container">
-          <table class="table table-hover history-table">
+        <button
+          class="btn btn-danger"
+          type="submit"
+          name="action"
+          value="withdraw"
+        >
+          Withdraw
+        </button>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          name="action"
+          value="deposit"
+        >
+          Deposit
+        </button>
+      </form>
+      <div class="accordion" id="tableAccordion">
+        <div class="table-responsive-lg">
+          <table class="table table-hover">
             <thead class="table-active">
               <tr>
                 <th>Date</th>
