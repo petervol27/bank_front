@@ -245,7 +245,13 @@
 
   document
     .getElementById('transactionType')
-    .addEventListener('change', function () {
+    .addEventListener('change', async function () {
+      const accountOptionsHTML = await fetchAccounts(); // fetch accounts each time the type changes
+      const receiverAccountSelect = document.getElementById('recieverAccount');
+
+      if (receiverAccountSelect) {
+        receiverAccountSelect.innerHTML = accountOptionsHTML;
+      }
       const selectedValue = this.value;
       const transactionForm = document.getElementById('transactionForm');
       const formContent = document.getElementById('formContent');
