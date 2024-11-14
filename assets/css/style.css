@@ -87,9 +87,10 @@
 }
 
 @media (max-width: 576px) {
-  main {
+  html {
     max-width: 100vw;
   }
+
   #registerForm,
   #loginForm {
     width: 75% !important;
