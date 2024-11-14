@@ -114,4 +114,7 @@
     display: flex !important;
     flex-direction: column !important;
   }
+  .history-table {
+    width: 75% !important;
+  }
 }
