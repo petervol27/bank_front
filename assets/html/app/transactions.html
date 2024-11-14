@@ -205,6 +205,7 @@
     await fetchAccount();
     await fetchTransactionOptions();
     const accountOptionsHTML = await fetchAccounts();
+    localStorage.setItem('accounts_info', accountOptionsHTML);
     const recieverAccountSelect = document.getElementById('recieverAccount');
     if (recieverAccountSelect) {
       recieverAccountSelect.innerHTML = accountOptionsHTML;
@@ -246,7 +247,6 @@
   document
     .getElementById('transactionType')
     .addEventListener('change', function () {
-      recieverAccountSelect.innerHTML = accountOptionsHTML;
       const selectedValue = this.value;
       const transactionForm = document.getElementById('transactionForm');
       const formContent = document.getElementById('formContent');
@@ -258,6 +258,10 @@
       }
       transactionForm.classList.remove('d-none');
       formContent.innerHTML = forms[selectedValue];
+      if (selectedValue === 'transfer') {
+        document.getElementById('recieverAccount').innerHTML =
+          localStorage.getItem('accounts_info');
+      }
     });
 
   const makeTransaction = async (
