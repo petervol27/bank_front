@@ -41,6 +41,11 @@
   font-weight: 500;
   color: whitesmoke;
 }
+.hero div {
+  position: absolute;
+  top: 30%;
+  right: 35%;
+}
 
 .hero-heading {
   font-size: 50px;
@@ -103,7 +108,7 @@
     padding: 100px;
   }
   .hero div {
-    top: 50% !important;
+    top: 0 !important;
     left: -40px !important;
     /* right: 50% !important; */
   }
